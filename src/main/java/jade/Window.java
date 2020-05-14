@@ -133,7 +133,6 @@ public class Window {
             glClear(GL_COLOR_BUFFER_BIT);
 
             if (dt >= 0) {
-                System.out.println(dt);
                 currentScene.update(dt);
             }
 
