@@ -3,6 +3,8 @@ package jade;
 import components.Sprite;
 import components.SpriteRenderer;
 import components.Spritesheet;
+import imgui.ImGui;
+import imgui.ImVec2;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -29,10 +31,9 @@ public class LevelEditorScene extends Scene {
 
         obj1 = new GameObject("Object 1", new Transform(new Vector2f(200, 100),
                 new Vector2f(256, 256)), 2);
-        obj1.addComponent(new SpriteRenderer(new Sprite(
-                AssetPool.getTexture("assets/images/blendImage1.png")
-        )));
+        obj1.addComponent(new SpriteRenderer(new Vector4f(1, 0, 0, 1)));
         this.addGameObjectToScene(obj1);
+        this.activeGameObject = obj1;
 
         GameObject obj2 = new GameObject("Object 2",
                 new Transform(new Vector2f(400, 100), new Vector2f(256, 256)), 3);
@@ -58,5 +59,42 @@ public class LevelEditorScene extends Scene {
         }
 
         this.renderer.render();
+    }
+
+    @Override
+    public void imgui() {
+        ImGui.begin("Character Sprites");
+
+        ImVec2 windowPos = new ImVec2();
+        ImVec2 contentRegion = new ImVec2();
+        ImGui.getWindowPos(windowPos);
+        ImGui.getWindowContentRegionMax(contentRegion);
+        float windowWidth = windowPos.x + contentRegion.x;
+
+        for (int i=0; i < this.sprites.size(); i++) {
+            Sprite sprite = sprites.getSprite(i);
+            int texId = sprite.getTexture().getTexID();
+            Vector2f[] texCoords = sprite.getTexCoords();
+
+            ImGui.pushID(i);
+            if (ImGui.imageButton(texId, 64, 64,
+                    texCoords[0].x, texCoords[0].y, texCoords[2].x, texCoords[2].y)) {
+                System.out.println("Image pressed " + i);
+            }
+            ImGui.popID();
+
+            ImVec2 lastButtonPos = new ImVec2();
+            ImVec2 itemSpacing = new ImVec2();
+            ImGui.getItemRectMax(lastButtonPos);
+            ImGui.getStyle().getItemSpacing(itemSpacing);
+
+            float lastButtonX2 = lastButtonPos.x;
+            float nextButtonX2 = lastButtonX2 + itemSpacing.x + 64;
+            if (i + 1 < sprites.size() && nextButtonX2 < windowWidth) {
+                ImGui.sameLine();
+            }
+        }
+
+        ImGui.end();
     }
 }
