@@ -4,3 +4,4 @@ gradle/*
 .gradle/*
 uiPreview.svg
 tilesets.svg
+assets/fonts/*
