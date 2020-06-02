@@ -1,0 +1,302 @@
+[
+  {
+    "name": "Object 1",
+    "components": [
+      {
+        "type": "components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 0.0,
+            "z": 0.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "texCoords": [
+              {
+                "x": 1.0,
+                "y": 1.0
+              },
+              {
+                "x": 1.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 200.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 256.0,
+        "y": 256.0
+      }
+    },
+    "zIndex": 2
+  },
+  {
+    "name": "Object 2",
+    "components": [
+      {
+        "type": "components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "texture": {
+              "filepath": "assets/images/blendImage2.png",
+              "texID": 3,
+              "width": 256,
+              "height": 256
+            },
+            "texCoords": [
+              {
+                "x": 1.0,
+                "y": 1.0
+              },
+              {
+                "x": 1.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 400.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 256.0,
+        "y": 256.0
+      }
+    },
+    "zIndex": 3
+  },
+  {
+    "name": "Object 1",
+    "components": [
+      {
+        "type": "components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 0.3045567,
+            "y": 0.84044945,
+            "z": 0.07365738,
+            "w": 1.0
+          },
+          "sprite": {
+            "texCoords": [
+              {
+                "x": 1.0,
+                "y": 1.0
+              },
+              {
+                "x": 1.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 200.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 256.0,
+        "y": 256.0
+      }
+    },
+    "zIndex": 2
+  },
+  {
+    "name": "Object 2",
+    "components": [
+      {
+        "type": "components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "texture": {
+              "filepath": "assets/images/blendImage2.png",
+              "texID": 3,
+              "width": 256,
+              "height": 256
+            },
+            "texCoords": [
+              {
+                "x": 1.0,
+                "y": 1.0
+              },
+              {
+                "x": 1.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 400.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 256.0,
+        "y": 256.0
+      }
+    },
+    "zIndex": 3
+  },
+  {
+    "name": "Object 1",
+    "components": [
+      {
+        "type": "components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 0.13596264,
+            "y": 0.32161778,
+            "z": 0.5707865,
+            "w": 1.0
+          },
+          "sprite": {
+            "texCoords": [
+              {
+                "x": 1.0,
+                "y": 1.0
+              },
+              {
+                "x": 1.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 200.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 256.0,
+        "y": 256.0
+      }
+    },
+    "zIndex": 2
+  },
+  {
+    "name": "Object 2",
+    "components": [
+      {
+        "type": "components.SpriteRenderer",
+        "properties": {
+          "color": {
+            "x": 1.0,
+            "y": 1.0,
+            "z": 1.0,
+            "w": 1.0
+          },
+          "sprite": {
+            "texture": {
+              "filepath": "assets/images/blendImage2.png",
+              "texID": 3,
+              "width": 256,
+              "height": 256
+            },
+            "texCoords": [
+              {
+                "x": 1.0,
+                "y": 1.0
+              },
+              {
+                "x": 1.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 0.0
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "transform": {
+      "position": {
+        "x": 400.0,
+        "y": 100.0
+      },
+      "scale": {
+        "x": 256.0,
+        "y": 256.0
+      }
+    },
+    "zIndex": 3
+  }
+]
