@@ -1,13 +1,14 @@
 [
   {
+    "uid": 0,
     "name": "Object 1",
     "components": [
       {
         "type": "components.SpriteRenderer",
         "properties": {
           "color": {
-            "x": 0.5822785,
-            "y": 1.0,
+            "x": 1.0,
+            "y": 0.0,
             "z": 0.0,
             "w": 1.0
           },
@@ -32,19 +33,21 @@
                 "y": 1.0
               }
             ]
-          }
+          },
+          "uid": 0
         }
       },
       {
         "type": "components.Rigidbody",
         "properties": {
-          "colliderType": 11,
-          "friction": 7.8,
+          "colliderType": 0,
+          "friction": 0.8,
           "velocity": {
-            "x": 4.0,
+            "x": 0.0,
             "y": 0.5,
             "z": 0.0
-          }
+          },
+          "uid": 1
         }
       }
     ],
@@ -61,6 +64,7 @@
     "zIndex": 2
   },
   {
+    "uid": 1,
     "name": "Object 2",
     "components": [
       {
@@ -99,7 +103,8 @@
                 "y": 1.0
               }
             ]
-          }
+          },
+          "uid": 2
         }
       }
     ],
