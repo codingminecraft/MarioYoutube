@@ -8,8 +8,8 @@
         "properties": {
           "color": {
             "x": 1.0,
-            "y": 0.0,
-            "z": 0.0,
+            "y": 1.0,
+            "z": 1.0,
             "w": 1.0
           },
           "sprite": {
@@ -46,8 +46,8 @@
     ],
     "transform": {
       "position": {
-        "x": 32.0,
-        "y": 96.0
+        "x": 128.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -103,8 +103,8 @@
     ],
     "transform": {
       "position": {
-        "x": 64.0,
-        "y": 96.0
+        "x": 160.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -160,8 +160,8 @@
     ],
     "transform": {
       "position": {
-        "x": 96.0,
-        "y": 96.0
+        "x": 192.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -217,8 +217,8 @@
     ],
     "transform": {
       "position": {
-        "x": 128.0,
-        "y": 96.0
+        "x": 224.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -251,20 +251,20 @@
             },
             "texCoords": [
               {
-                "x": 0.85714287,
+                "x": 0.14285715,
+                "y": 1.0
+              },
+              {
+                "x": 0.14285715,
                 "y": 0.9166667
               },
               {
-                "x": 0.85714287,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.71428573,
-                "y": 0.8333333
-              },
-              {
-                "x": 0.71428573,
+                "x": 0.0,
                 "y": 0.9166667
+              },
+              {
+                "x": 0.0,
+                "y": 1.0
               }
             ]
           },
@@ -274,8 +274,8 @@
     ],
     "transform": {
       "position": {
-        "x": 192.0,
-        "y": 288.0
+        "x": 256.0,
+        "y": 160.0
       },
       "scale": {
         "x": 32.0,
@@ -308,19 +308,19 @@
             },
             "texCoords": [
               {
-                "x": 1.0,
+                "x": 0.5714286,
                 "y": 0.9166667
               },
               {
-                "x": 1.0,
+                "x": 0.5714286,
                 "y": 0.8333333
               },
               {
-                "x": 0.85714287,
+                "x": 0.42857143,
                 "y": 0.8333333
               },
               {
-                "x": 0.85714287,
+                "x": 0.42857143,
                 "y": 0.9166667
               }
             ]
@@ -331,8 +331,8 @@
     ],
     "transform": {
       "position": {
-        "x": 224.0,
-        "y": 288.0
+        "x": 160.0,
+        "y": 192.0
       },
       "scale": {
         "x": 32.0,
@@ -365,19 +365,19 @@
             },
             "texCoords": [
               {
-                "x": 1.0,
+                "x": 0.71428573,
                 "y": 0.9166667
               },
               {
-                "x": 1.0,
+                "x": 0.71428573,
                 "y": 0.8333333
               },
               {
-                "x": 0.85714287,
+                "x": 0.5714286,
                 "y": 0.8333333
               },
               {
-                "x": 0.85714287,
+                "x": 0.5714286,
                 "y": 0.9166667
               }
             ]
@@ -388,8 +388,8 @@
     ],
     "transform": {
       "position": {
-        "x": 256.0,
-        "y": 288.0
+        "x": 192.0,
+        "y": 192.0
       },
       "scale": {
         "x": 32.0,
@@ -422,31 +422,31 @@
             },
             "texCoords": [
               {
+                "x": 0.42857143,
+                "y": 0.9166667
+              },
+              {
+                "x": 0.42857143,
+                "y": 0.8333333
+              },
+              {
                 "x": 0.2857143,
-                "y": 1.0
+                "y": 0.8333333
               },
               {
                 "x": 0.2857143,
                 "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 1.0
               }
             ]
           },
-          "uid": 11
+          "uid": 9
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 64.0,
-        "y": 608.0
+        "x": 160.0,
+        "y": 224.0
       },
       "scale": {
         "x": 32.0,
@@ -479,658 +479,31 @@
             },
             "texCoords": [
               {
-                "x": 0.2857143,
-                "y": 1.0
-              },
-              {
-                "x": 0.2857143,
+                "x": 0.42857143,
                 "y": 0.9166667
               },
               {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              }
-            ]
-          },
-          "uid": 12
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 288.0,
-        "y": 224.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 10,
-    "name": "Sprite_Object_Gen",
-    "components": [
-      {
-        "type": "components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "texID": 2,
-              "width": 112,
-              "height": 192
-            },
-            "texCoords": [
-              {
-                "x": 0.2857143,
-                "y": 1.0
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              }
-            ]
-          },
-          "uid": 13
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 32.0,
-        "y": 608.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 11,
-    "name": "Sprite_Object_Gen",
-    "components": [
-      {
-        "type": "components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "texID": 2,
-              "width": 112,
-              "height": 192
-            },
-            "texCoords": [
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.0,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.0,
-                "y": 1.0
-              }
-            ]
-          },
-          "uid": 14
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 384.0,
-        "y": 384.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 12,
-    "name": "Sprite_Object_Gen",
-    "components": [
-      {
-        "type": "components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "texID": 2,
-              "width": 112,
-              "height": 192
-            },
-            "texCoords": [
-              {
-                "x": 1.0,
-                "y": 0.9166667
-              },
-              {
-                "x": 1.0,
+                "x": 0.42857143,
                 "y": 0.8333333
               },
               {
-                "x": 0.85714287,
+                "x": 0.2857143,
                 "y": 0.8333333
               },
               {
-                "x": 0.85714287,
+                "x": 0.2857143,
                 "y": 0.9166667
               }
             ]
           },
-          "uid": 15
+          "uid": 10
         }
       }
     ],
     "transform": {
       "position": {
-        "x": 416.0,
-        "y": 320.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 13,
-    "name": "Sprite_Object_Gen",
-    "components": [
-      {
-        "type": "components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "texID": 2,
-              "width": 112,
-              "height": 192
-            },
-            "texCoords": [
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.0,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.0,
-                "y": 1.0
-              }
-            ]
-          },
-          "uid": 18
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 320.0,
-        "y": 288.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 14,
-    "name": "Sprite_Object_Gen",
-    "components": [
-      {
-        "type": "components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "texID": 2,
-              "width": 112,
-              "height": 192
-            },
-            "texCoords": [
-              {
-                "x": 0.2857143,
-                "y": 1.0
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              }
-            ]
-          },
-          "uid": 19
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 352.0,
-        "y": 288.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 15,
-    "name": "Sprite_Object_Gen",
-    "components": [
-      {
-        "type": "components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "texID": 2,
-              "width": 112,
-              "height": 192
-            },
-            "texCoords": [
-              {
-                "x": 0.2857143,
-                "y": 1.0
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              }
-            ]
-          },
-          "uid": 20
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 384.0,
-        "y": 288.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 16,
-    "name": "Sprite_Object_Gen",
-    "components": [
-      {
-        "type": "components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "texID": 2,
-              "width": 112,
-              "height": 192
-            },
-            "texCoords": [
-              {
-                "x": 0.2857143,
-                "y": 1.0
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              }
-            ]
-          },
-          "uid": 21
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 352.0,
-        "y": 256.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 17,
-    "name": "Sprite_Object_Gen",
-    "components": [
-      {
-        "type": "components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "texID": 2,
-              "width": 112,
-              "height": 192
-            },
-            "texCoords": [
-              {
-                "x": 0.2857143,
-                "y": 1.0
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              }
-            ]
-          },
-          "uid": 22
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 384.0,
-        "y": 256.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 18,
-    "name": "Sprite_Object_Gen",
-    "components": [
-      {
-        "type": "components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "texID": 2,
-              "width": 112,
-              "height": 192
-            },
-            "texCoords": [
-              {
-                "x": 0.2857143,
-                "y": 1.0
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              }
-            ]
-          },
-          "uid": 23
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 352.0,
+        "x": 192.0,
         "y": 224.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 19,
-    "name": "Sprite_Object_Gen",
-    "components": [
-      {
-        "type": "components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "texID": 2,
-              "width": 112,
-              "height": 192
-            },
-            "texCoords": [
-              {
-                "x": 0.2857143,
-                "y": 1.0
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              }
-            ]
-          },
-          "uid": 24
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 384.0,
-        "y": 224.0
-      },
-      "scale": {
-        "x": 32.0,
-        "y": 32.0
-      }
-    },
-    "zIndex": 0
-  },
-  {
-    "uid": 20,
-    "name": "Sprite_Object_Gen",
-    "components": [
-      {
-        "type": "components.SpriteRenderer",
-        "properties": {
-          "color": {
-            "x": 1.0,
-            "y": 1.0,
-            "z": 1.0,
-            "w": 1.0
-          },
-          "sprite": {
-            "width": 16.0,
-            "height": 16.0,
-            "texture": {
-              "filepath": "assets/images/spritesheets/decorationsAndBlocks.png",
-              "texID": 2,
-              "width": 112,
-              "height": 192
-            },
-            "texCoords": [
-              {
-                "x": 0.2857143,
-                "y": 1.0
-              },
-              {
-                "x": 0.2857143,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 0.9166667
-              },
-              {
-                "x": 0.14285715,
-                "y": 1.0
-              }
-            ]
-          },
-          "uid": 25
-        }
-      }
-    ],
-    "transform": {
-      "position": {
-        "x": 416.0,
-        "y": 288.0
       },
       "scale": {
         "x": 32.0,
