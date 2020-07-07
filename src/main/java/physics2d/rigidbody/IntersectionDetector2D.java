@@ -99,7 +99,24 @@ public class IntersectionDetector2D {
         if (tmax < 0 || tmin > tmax) {
             return false;
         }
+
         float t = (tmin < 0f) ? tmax : tmin;
         return t > 0f && t * t < line.lengthSquared();
     }
+
+    public static boolean lineAndBox2D(Line2D line, Box2D box) {
+        float theta = -box.getRigidbody().getRotation();
+        Vector2f center = box.getRigidbody().getPosition();
+        Vector2f localStart = new Vector2f(line.getStart());
+        Vector2f localEnd = new Vector2f(line.getEnd());
+        JMath.rotate(localStart, theta, center);
+        JMath.rotate(localEnd, theta, center);
+
+        Line2D localLine = new Line2D(localStart, localEnd);
+        AABB aabb = new AABB(box.getMin(), box.getMax());
+
+        return lineAndAABB(localLine, aabb);
+    }
+
+    // Ray vs. primitive tests
 }
