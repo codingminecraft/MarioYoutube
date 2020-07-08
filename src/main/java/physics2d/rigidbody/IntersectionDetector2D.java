@@ -1,9 +1,7 @@
 package physics2d.rigidbody;
 
 import org.joml.Vector2f;
-import physics2d.primitives.AABB;
-import physics2d.primitives.Box2D;
-import physics2d.primitives.Circle;
+import physics2d.primitives.*;
 import renderer.Line2D;
 import util.JMath;
 
@@ -118,5 +116,39 @@ public class IntersectionDetector2D {
         return lineAndAABB(localLine, aabb);
     }
 
-    // Ray vs. primitive tests
+    // Raycasts
+    public static boolean raycast(Circle circle, Ray2D ray, RaycastResult result) {
+        RaycastResult.reset(result);
+
+        Vector2f originToCircle = new Vector2f(circle.getCenter()).sub(ray.getOrigin());
+        float radiusSquared = circle.getRadius() * circle.getRadius();
+        float originToCircleLengthSquared = originToCircle.lengthSquared();
+
+        // Project the vector from the ray origin onto the direction of the ray
+        float a = originToCircle.dot(ray.getDirection());
+        float bSq = originToCircleLengthSquared - (a * a);
+        if (radiusSquared - bSq < 0.0f) {
+            return false;
+        }
+
+        float f = (float)Math.sqrt(radiusSquared - bSq);
+        float t = 0;
+        if (originToCircleLengthSquared < radiusSquared) {
+            // Ray starts inside the circle
+            t = a + f;
+        } else {
+            t = a - f;
+        }
+
+        if (result != null) {
+            Vector2f point = new Vector2f(ray.getOrigin()).add(ray.getDirection().mul(t));
+            Vector2f normal = new Vector2f(point).sub(circle.getCenter());
+            normal.normalize();
+
+            result.init(point, normal, t, true);
+        }
+
+        return true;
+    }
+
 }
