@@ -286,7 +286,7 @@ public class IntersectionDetector2D {
 
         // Create a circle in box's local space
         Vector2f r = new Vector2f(circle.getCenter()).sub(box.getRigidbody().getPosition());
-        JMath.rotate(r, -box.getRigidbody().getRotation(), new Vector2f(box.getHalfSize()));
+        JMath.rotate(r, -box.getRigidbody().getRotation(), new Vector2f());
         Vector2f localCirclePos = new Vector2f(r).add(box.getHalfSize());
 
         Vector2f closestPointToCircle = new Vector2f(localCirclePos);
