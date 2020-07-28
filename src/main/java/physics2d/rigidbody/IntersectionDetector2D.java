@@ -328,8 +328,8 @@ public class IntersectionDetector2D {
                 new Vector2f(0, 1), new Vector2f(1, 0),
                 new Vector2f(0, 1), new Vector2f(1, 0)
         };
-        JMath.rotate(axesToTest[2], b2.getRigidbody().getRotation(), b2.getRigidbody().getPosition());
-        JMath.rotate(axesToTest[3], b2.getRigidbody().getRotation(), b2.getRigidbody().getPosition());
+        JMath.rotate(axesToTest[2], b2.getRigidbody().getRotation(), new Vector2f());
+        JMath.rotate(axesToTest[3], b2.getRigidbody().getRotation(), new Vector2f());
         for (int i=0; i < axesToTest.length; i++) {
             if (!overlapOnAxis(b1, b2, axesToTest[i])) {
                 return false;
