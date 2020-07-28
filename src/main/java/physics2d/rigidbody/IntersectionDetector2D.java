@@ -326,7 +326,7 @@ public class IntersectionDetector2D {
     public static boolean AABBAndBox2D(AABB b1, Box2D b2) {
         Vector2f axesToTest[] = {
                 new Vector2f(0, 1), new Vector2f(1, 0),
-                new Vector2f(0, 1), new Vector2f(0, 1)
+                new Vector2f(0, 1), new Vector2f(1, 0)
         };
         JMath.rotate(axesToTest[2], b2.getRigidbody().getRotation(), b2.getRigidbody().getPosition());
         JMath.rotate(axesToTest[3], b2.getRigidbody().getRotation(), b2.getRigidbody().getPosition());
