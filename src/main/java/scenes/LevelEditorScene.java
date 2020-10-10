@@ -11,6 +11,7 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import physics2d.PhysicsSystem2D;
+import physics2d.primitives.Circle;
 import physics2d.rigidbody.Rigidbody2D;
 import renderer.DebugDraw;
 import scenes.Scene;
@@ -36,7 +37,8 @@ public class LevelEditorScene extends Scene {
         levelEditorStuff.addComponent(new GridLines());
 
 //        obj1 = new Transform(new Vector2f(100, 500));
-//        obj2 = new Transform(new Vector2f(200, 500));
+//        obj2 = new Transform(new Vector2f(100, 300));
+//
 //        rb1 = new Rigidbody2D();
 //        rb2 = new Rigidbody2D();
 //        rb1.setRawTransform(obj1);
@@ -44,8 +46,17 @@ public class LevelEditorScene extends Scene {
 //        rb1.setMass(100.0f);
 //        rb2.setMass(200.0f);
 //
-//        physics.addRigidbody(rb1);
-//        physics.addRigidbody(rb2);
+//        Circle c1 = new Circle();
+//        c1.setRadius(10.0f);
+//        c1.setRigidbody(rb1);
+//        Circle c2 = new Circle();
+//        c2.setRadius(20.0f);
+//        c2.setRigidbody(rb2);
+//        rb1.setCollider(c1);
+//        rb2.setCollider(c2);
+//
+//        physics.addRigidbody(rb1, true);
+//        physics.addRigidbody(rb2, false);
 
         loadResources();
         this.camera = new Camera(new Vector2f(-250, 0));
@@ -78,8 +89,8 @@ public class LevelEditorScene extends Scene {
             go.update(dt);
         }
 
-//        DebugDraw.addBox2D(obj1.position, new Vector2f(32, 32), 0.0f, new Vector3f(1, 0, 0));
-//        DebugDraw.addBox2D(obj2.position, new Vector2f(32, 32), 0.0f, new Vector3f(0.2f, 0.8f, 0.1f));
+//        DebugDraw.addCircle(obj1.position, 10.0f, new Vector3f(1, 0, 0));
+//        DebugDraw.addCircle(obj2.position, 20.0f, new Vector3f(0.2f, 0.8f, 0.1f));
 //        physics.update(dt);
     }
 
