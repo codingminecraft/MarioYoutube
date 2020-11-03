@@ -19,7 +19,7 @@ public class LevelEditorScene extends Scene {
 
     private Spritesheet sprites;
 
-    GameObject levelEditorStuff = new GameObject("LevelEditor", new Transform(new Vector2f()), 0);
+    GameObject levelEditorStuff = this.createGameObject("LevelEditor");
     PhysicsSystem2D physics = new PhysicsSystem2D(1.0f / 60.0f, new Vector2f(0, -10));
     Transform obj1, obj2;
     Rigidbody2D rb1, rb2;
