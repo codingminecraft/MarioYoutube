@@ -186,7 +186,7 @@
     "doSerialization": true
   },
   {
-    "uid": 8,
+    "uid": 4,
     "name": "Sprite_Object_Gen",
     "components": [
       {

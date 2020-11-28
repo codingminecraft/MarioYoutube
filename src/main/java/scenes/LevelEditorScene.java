@@ -5,14 +5,8 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import jade.*;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
-import physics2d.PhysicsSystem2D;
-import physics2d.primitives.Circle;
-import physics2d.rigidbody.Rigidbody2D;
-import renderer.DebugDraw;
-import scenes.Scene;
-import sun.security.ssl.Debug;
+import physics2dtmp.PhysicsSystem2D;
+import physics2dtmp.rigidbody.Rigidbody2D;
 import util.AssetPool;
 
 public class LevelEditorScene extends Scene {
