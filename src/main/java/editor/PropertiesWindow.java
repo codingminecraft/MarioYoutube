@@ -75,4 +75,8 @@ public class PropertiesWindow {
     public GameObject getActiveGameObject() {
         return this.activeGameObject;
     }
+
+    public void setActiveGameObject(GameObject go) {
+        this.activeGameObject = go;
+    }
 }
