@@ -48,13 +48,10 @@ public class RenderBatch implements Comparable<RenderBatch> {
     private int maxBatchSize;
     private int zIndex;
 
-    private Renderer renderer;
-
-    public RenderBatch(int maxBatchSize, int zIndex, Renderer renderer) {
+    public RenderBatch(int maxBatchSize, int zIndex) {
         this.zIndex = zIndex;
         this.sprites = new SpriteRenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;
-        this.renderer = renderer;
 
         // 4 vertices quads
         vertices = new float[maxBatchSize * 4 * VERTEX_SIZE];
@@ -125,14 +122,6 @@ public class RenderBatch implements Comparable<RenderBatch> {
                 loadVertexProperties(i);
                 spr.setClean();
                 rebufferData = true;
-            }
-
-            // TODO: Come up with better solution for changing z-index at runtime
-            if (spr.gameObject.transform.zIndex != this.zIndex) {
-                spr.setReAdd();
-                destroyIfExists(spr.gameObject);
-                renderer.add(spr.gameObject);
-                i--;
             }
         }
         if (rebufferData) {
@@ -213,15 +202,15 @@ public class RenderBatch implements Comparable<RenderBatch> {
         }
 
         // Add vertices with the appropriate properties
-        float xAdd = 0.5f;
-        float yAdd = 0.5f;
+        float xAdd = 1.0f;
+        float yAdd = 1.0f;
         for (int i=0; i < 4; i++) {
             if (i == 1) {
-                yAdd = -0.5f;
+                yAdd = 0.0f;
             } else if (i == 2) {
-                xAdd = -0.5f;
+                xAdd = 0.0f;
             } else if (i == 3) {
-                yAdd = 0.5f;
+                yAdd = 1.0f;
             }
 
             Vector4f currentPos = new Vector4f(sprite.gameObject.transform.position.x + (xAdd * sprite.gameObject.transform.scale.x),

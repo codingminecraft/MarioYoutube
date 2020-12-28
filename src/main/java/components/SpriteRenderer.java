@@ -3,7 +3,6 @@ package components;
 import editor.JImGui;
 import imgui.ImGui;
 import jade.Transform;
-import jade.Window;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import renderer.Texture;
@@ -15,7 +14,18 @@ public class SpriteRenderer extends Component {
 
     private transient Transform lastTransform;
     private transient boolean isDirty = true;
-    private transient boolean reAdd = false;
+
+//    public SpriteRenderer(Vector4f color) {
+//        this.color = color;
+//        this.sprite = new Sprite(null);
+//        this.isDirty = true;
+//    }
+//
+//    public SpriteRenderer(Sprite sprite) {
+//        this.sprite = sprite;
+//        this.color = new Vector4f(1, 1, 1, 1);
+//        this.isDirty = true;
+//    }
 
     @Override
     public void start() {
@@ -71,14 +81,6 @@ public class SpriteRenderer extends Component {
             this.isDirty = true;
             this.color.set(color);
         }
-    }
-
-    public void setReAdd() {
-        this.reAdd = true;
-    }
-
-    public boolean reAdd() {
-        return this.reAdd;
     }
 
     public boolean isDirty() {
