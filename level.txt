@@ -1,6 +1,6 @@
 [
   {
-    "uid": 53,
+    "uid": 0,
     "name": "Sprite_Object_Gen",
     "components": [
       {
@@ -97,7 +97,7 @@
     "isDead": false
   },
   {
-    "uid": 54,
+    "uid": 1,
     "name": "Sprite_Object_Gen",
     "components": [
       {
@@ -194,7 +194,7 @@
     "isDead": false
   },
   {
-    "uid": 55,
+    "uid": 2,
     "name": "Sprite_Object_Gen",
     "components": [
       {
@@ -291,7 +291,7 @@
     "isDead": false
   },
   {
-    "uid": 56,
+    "uid": 3,
     "name": "Sprite_Object_Gen",
     "components": [
       {
@@ -388,7 +388,7 @@
     "isDead": false
   },
   {
-    "uid": 57,
+    "uid": 4,
     "name": "Sprite_Object_Gen",
     "components": [
       {
@@ -485,7 +485,7 @@
     "isDead": false
   },
   {
-    "uid": 58,
+    "uid": 5,
     "name": "Sprite_Object_Gen",
     "components": [
       {
@@ -582,7 +582,7 @@
     "isDead": false
   },
   {
-    "uid": 59,
+    "uid": 6,
     "name": "Sprite_Object_Gen",
     "components": [
       {
@@ -679,7 +679,7 @@
     "isDead": false
   },
   {
-    "uid": 60,
+    "uid": 7,
     "name": "Sprite_Object_Gen",
     "components": [
       {
