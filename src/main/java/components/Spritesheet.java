@@ -48,6 +48,8 @@ public class Spritesheet {
         return this.sprites.get(index);
     }
 
+    public List<Sprite> getSprites() { return this.sprites; }
+
     public int size() {
         return sprites.size();
     }
