@@ -29,6 +29,25 @@ public class MouseListener {
         this.lastY = 0.0;
     }
 
+    public static void endFrame() {
+        get().scrollY = 0.0f;
+        get().scrollX = 0.0f;
+    }
+
+    public static void clear() {
+        get().scrollX = 0.0;
+        get().scrollY = 0.0;
+        get().xPos = 0.0;
+        get().yPos = 0.0;
+        get().lastX = 0.0;
+        get().lastY = 0.0;
+        get().mouseButtonDown = 0;
+        get().isDragging = false;
+        for (int i = 0; i < get().mouseButtonPressed.length; i++) {
+            get().mouseButtonPressed[i] = false;
+        }
+    }
+
     public static MouseListener get() {
         if (MouseListener.instance == null) {
             MouseListener.instance = new MouseListener();
@@ -38,6 +57,9 @@ public class MouseListener {
     }
 
     public static void mousePosCallback(long window, double xpos, double ypos) {
+        if (!Window.getImGuiLayer().getGameViewWindow().getWantCaptureMouse()) {
+            clear();
+        }
         if (get().mouseButtonDown > 0) {
             get().isDragging = true;
         }
@@ -126,6 +148,30 @@ public class MouseListener {
         return new Vector2f(tmp.x, tmp.y);
     }
 
+    public static Vector2f screenToWorld(Vector2f screenCoords) {
+        Vector2f normalizedScreenCoords = new Vector2f(screenCoords.x / Window.getWidth(), screenCoords.y / Window.getHeight());
+        normalizedScreenCoords.mul(2.0f).sub(new Vector2f(1.0f, 1.0f));
+        Camera camera = Window.getScene().camera();
+        Vector4f tmp = new Vector4f(normalizedScreenCoords.x, normalizedScreenCoords.y, 0, 1);
+        Matrix4f inverseView = new Matrix4f(camera.getInverseView());
+        Matrix4f inverseProjection = new Matrix4f(camera.getInverseProjection());
+        tmp.mul(inverseView.mul(inverseProjection));
+        return new Vector2f(tmp.x, tmp.y);
+    }
+
+    public static Vector2f worldToScreen(Vector2f worldCoords) {
+        Camera camera = Window.getScene().camera();
+        Vector4f ndcSpacePos = new Vector4f(worldCoords.x, worldCoords.y, 1.0f, 1);
+        Matrix4f view = new Matrix4f(camera.getViewMatrix());
+        Matrix4f projection = new Matrix4f(camera.getProjectionMatrix());
+        ndcSpacePos.mul(projection.mul(view));
+        Vector2f windowSpace = new Vector2f(ndcSpacePos.x, ndcSpacePos.y).mul(1.0f / ndcSpacePos.w);
+        windowSpace.add(new Vector2f(1.0f, 1.0f)).mul(0.5f);
+        windowSpace.mul(new Vector2f(Window.getWidth(), Window.getHeight()));
+
+        return windowSpace;
+    }
+
     public static float getScreenX() {
         return getScreen().x;
     }
@@ -136,9 +182,9 @@ public class MouseListener {
 
     public static Vector2f getScreen() {
         float currentX = getX() - get().gameViewportPos.x;
-        currentX = (currentX / get().gameViewportSize.x) * 3840.0f;
+        currentX = (currentX / get().gameViewportSize.x) * Window.getWidth();
         float currentY = (getY() - get().gameViewportPos.y);
-        currentY = (1.0f - (currentY / get().gameViewportSize.y)) * 2160.0f;
+        currentY = (1.0f - (currentY / get().gameViewportSize.y)) * Window.getHeight();
         return new Vector2f(currentX, currentY);
     }
 

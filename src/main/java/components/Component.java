@@ -4,6 +4,8 @@ import editor.JImGui;
 import imgui.ImGui;
 import imgui.type.ImInt;
 import jade.GameObject;
+import org.jbox2d.callbacks.ContactFilter;
+import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -116,6 +118,14 @@ public abstract class Component {
     }
 
     public void destroy() {
+
+    }
+
+    public void beginCollision(GameObject collidingObject, Contact contact) {
+
+    }
+
+    public void endCollision(GameObject collidingObject, Contact contact) {
 
     }
 

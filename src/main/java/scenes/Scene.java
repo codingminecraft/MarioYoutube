@@ -68,8 +68,19 @@ public class Scene {
 
     public void destroy() {
         for (GameObject go : gameObjects) {
+            physics2D.destroyGameObject(go);
             go.destroy();
         }
+    }
+
+    public <T extends Component> GameObject findGameObjectWith(Class<T> clazz) {
+        for (GameObject go : gameObjects) {
+            if (go.getComponent(clazz) != null) {
+                return go;
+            }
+        }
+
+        return null;
     }
 
     public List<GameObject> getGameObjects() {
@@ -94,6 +105,7 @@ public class Scene {
                 gameObjects.remove(i);
                 this.renderer.destroyGameObject(go);
                 this.physics2D.destroyGameObject(go);
+                go.clearComponents();
                 i--;
             }
         }
@@ -111,6 +123,7 @@ public class Scene {
                 gameObjects.remove(i);
                 this.renderer.destroyGameObject(go);
                 this.physics2D.destroyGameObject(go);
+                go.clearComponents();
                 i--;
             }
         }
@@ -140,6 +153,7 @@ public class Scene {
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
                 .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+                .enableComplexMapKeySerialization()
                 .create();
 
         try {
@@ -162,6 +176,7 @@ public class Scene {
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
                 .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+                .enableComplexMapKeySerialization()
                 .create();
 
         String inFile = "";

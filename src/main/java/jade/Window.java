@@ -4,6 +4,7 @@ import observers.EventSystem;
 import observers.Observer;
 import observers.events.Event;
 import observers.events.EventType;
+import org.joml.Vector4f;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.openal.AL;
@@ -13,6 +14,7 @@ import org.lwjgl.openal.ALCapabilities;
 import org.lwjgl.opengl.GL;
 import renderer.*;
 import scenes.LevelEditorSceneInitializer;
+import scenes.LevelSceneInitializer;
 import scenes.Scene;
 import scenes.SceneInitializer;
 import util.AssetPool;
@@ -40,8 +42,8 @@ public class Window implements Observer {
     private static Scene currentScene;
 
     private Window() {
-        this.width = 1920;
-        this.height = 1080;
+        this.width = 3840;
+        this.height = 2160;
         this.title = "Jade";
         EventSystem.addObserver(this);
     }
@@ -52,6 +54,7 @@ public class Window implements Observer {
         }
 
         getImguiLayer().getPropertiesWindow().setActiveGameObject(null);
+        getImGuiLayer().getPropertiesWindow().clearSelected();
         currentScene = new Scene(sceneInitializer);
         currentScene.load();
         currentScene.init();
@@ -69,6 +72,8 @@ public class Window implements Observer {
     public static Scene getScene() {
         return get().currentScene;
     }
+
+    public static ImGuiLayer getImGuiLayer() { return get().imguiLayer; }
 
     public void run() {
         System.out.println("Hello LWJGL " + Version.getVersion() + "!");
@@ -111,9 +116,7 @@ public class Window implements Observer {
         }
 
         glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePosCallback);
-        glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
         glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
-        glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
         glfwSetWindowSizeCallback(glfwWindow, (w, newWidth, newHeight) -> {
             Window.setWidth(newWidth);
             Window.setHeight(newHeight);
@@ -192,11 +195,11 @@ public class Window implements Observer {
             DebugDraw.beginFrame();
 
             this.framebuffer.bind();
-            glClearColor(1, 1, 1, 1);
+            Vector4f clearColor = getScene().camera().clearColor;
+            glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w);
             glClear(GL_COLOR_BUFFER_BIT);
 
             if (dt >= 0) {
-                DebugDraw.draw();
                 Renderer.bindShader(defaultShader);
                 if (runtimePlaying) {
                     currentScene.update(dt);
@@ -204,12 +207,15 @@ public class Window implements Observer {
                     currentScene.editorUpdate(dt);
                 }
                 currentScene.render();
+                DebugDraw.draw();
             }
             this.framebuffer.unbind();
 
             this.imguiLayer.update(dt, currentScene);
             glfwSwapBuffers(glfwWindow);
 
+            MouseListener.endFrame();
+            KeyListener.endFrame();
             endTime = (float)glfwGetTime();
             dt = endTime - beginTime;
             beginTime = endTime;
@@ -221,7 +227,7 @@ public class Window implements Observer {
     }
 
     public static int getHeight() {
-        return get().height;
+        return 2160;//get().height;
     }
 
     public static void setWidth(int newWidth) {
@@ -250,7 +256,7 @@ public class Window implements Observer {
             case GameEngineStartPlay:
                 this.runtimePlaying = true;
                 currentScene.save();
-                Window.changeScene(new LevelEditorSceneInitializer());
+                Window.changeScene(new LevelSceneInitializer());
                 break;
             case GameEngineStopPlay:
                 this.runtimePlaying = false;

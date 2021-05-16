@@ -28,6 +28,10 @@ public class GameObject {
         this.uid = ID_COUNTER++;
     }
 
+    public void clearComponents() {
+        this.components.clear();
+    }
+
     public <T extends Component> T getComponent(Class<T> componentClass) {
         for (Component c : components) {
             if (componentClass.isAssignableFrom(c.getClass())) {
@@ -96,6 +100,7 @@ public class GameObject {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
                 .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+                .enableComplexMapKeySerialization()
                 .create();
         String objAsJson = gson.toJson(this);
         GameObject obj = gson.fromJson(objAsJson, GameObject.class);

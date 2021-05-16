@@ -1,6 +1,7 @@
 package physics2d.components;
 
 import components.Component;
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.joml.Vector2f;
 import physics2d.enums.BodyType;
@@ -11,6 +12,7 @@ public class Rigidbody2D extends Component {
     private float linearDamping = 0.9f;
     private float mass = 0;
     private BodyType bodyType = BodyType.Dynamic;
+    private float friction = 0.1f;
 
     private boolean fixedRotation = false;
     private boolean continuousCollision = true;
@@ -24,7 +26,17 @@ public class Rigidbody2D extends Component {
                     rawBody.getPosition().x, rawBody.getPosition().y
             );
             this.gameObject.transform.rotation = (float)Math.toDegrees(rawBody.getAngle());
+            Vec2 vel = rawBody.getLinearVelocity();
+            this.velocity = new Vector2f(vel.x, vel.y);
         }
+    }
+
+    public void addVelocity(Vector2f velocity) {
+        rawBody.applyForceToCenter(new Vec2(velocity.x, velocity.y));
+    }
+
+    public void addImpulse(Vector2f impulse) {
+        rawBody.applyLinearImpulse(new Vec2(impulse.x, impulse.y), rawBody.getWorldCenter());
     }
 
     public Vector2f getVelocity() {
@@ -90,4 +102,8 @@ public class Rigidbody2D extends Component {
     public void setRawBody(Body rawBody) {
         this.rawBody = rawBody;
     }
+
+    public float getFriction() { return this.friction; }
+
+    public void setFriction(float newVal) { this.friction = newVal; }
 }

@@ -100,6 +100,8 @@ public class ImGuiLayer {
 
             if (!io.getWantCaptureMouse() || gameViewWindow.getWantCaptureMouse()) {
                 MouseListener.mouseButtonCallback(w, button, action, mods);
+            } else {
+                MouseListener.clear();
             }
         });
 
@@ -163,7 +165,6 @@ public class ImGuiLayer {
         currentScene.imgui();
         //ImGui.showDemoWindow();
         gameViewWindow.imgui();
-        propertiesWindow.update(dt, currentScene);
         propertiesWindow.imgui();
         sceneHeirarchyWindow.imgui();
 
@@ -196,6 +197,10 @@ public class ImGuiLayer {
     private void destroyImGui() {
         imGuiGl3.dispose();
         ImGui.destroyContext();
+    }
+
+    public GameViewWindow getGameViewWindow() {
+        return this.gameViewWindow;
     }
 
     private void setupDockspace() {

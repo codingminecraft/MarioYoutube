@@ -6,32 +6,8 @@ import imgui.type.ImString;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class StateMachine extends Component {
-    private class StateTrigger {
-        public String state;
-        public String trigger;
-
-        public StateTrigger() {}
-
-        public StateTrigger(String state, String trigger) {
-            this.state = state;
-            this.trigger = trigger;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (o.getClass() != StateTrigger.class) return false;
-            StateTrigger t2 = (StateTrigger)o;
-            return t2.trigger.equals(this.trigger) && t2.state.equals(this.state);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(state, trigger);
-        }
-    }
 
     public HashMap<StateTrigger, String> stateTransfers = new HashMap<>();
     private List<AnimationState> states = new ArrayList<>();
@@ -70,7 +46,8 @@ public class StateMachine extends Component {
         for (StateTrigger state : stateTransfers.keySet()) {
             if (state.state.equals(currentState.title) && state.trigger.equals(trigger)) {
                 if (stateTransfers.get(state) != null) {
-                    int newStateIndex = states.indexOf(stateTransfers.get(state));
+                    String newState = stateTransfers.get(state);
+                    int newStateIndex = stateIndexOf(newState);
                     if (newStateIndex > -1) {
                         currentState = states.get(newStateIndex);
                     }
@@ -78,8 +55,6 @@ public class StateMachine extends Component {
                 return;
             }
         }
-
-        System.out.println("Unable to find trigger '" + trigger + "'");
     }
 
     @Override
@@ -130,5 +105,17 @@ public class StateMachine extends Component {
                 index++;
             }
         }
+    }
+
+    private int stateIndexOf(String stateTitle) {
+        int index = 0;
+        for (AnimationState state : states) {
+            if (state.title.equals(stateTitle)) {
+                return index;
+            }
+            index++;
+        }
+
+        return -1;
     }
 }

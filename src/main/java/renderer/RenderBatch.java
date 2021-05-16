@@ -169,11 +169,15 @@ public class RenderBatch implements Comparable<RenderBatch> {
     public boolean destroyIfExists(GameObject go) {
         SpriteRenderer sprite = go.getComponent(SpriteRenderer.class);
         for (int i=0; i < numSprites; i++) {
-            if (sprites[i] == sprite) {
+            if (sprites[i] == sprite && numSprites > 1) {
                 for (int j=i; j < numSprites - 1; j++) {
                     sprites[j] = sprites[j + 1];
                     sprites[j].setDirty();
                 }
+                numSprites--;
+                return true;
+            } else if (sprites[i] == sprite && numSprites == 1) {
+                sprites[i] = null;
                 numSprites--;
                 return true;
             }
