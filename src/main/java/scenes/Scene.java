@@ -17,6 +17,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +28,7 @@ public class Scene {
     private Camera camera;
     private boolean isRunning;
     private List<GameObject> gameObjects;
+    private List<GameObject> pendingNewObjects;
     private Physics2D physics2D;
 
     private SceneInitializer sceneInitializer;
@@ -36,6 +38,7 @@ public class Scene {
         this.physics2D = new Physics2D();
         this.renderer = new Renderer();
         this.gameObjects = new ArrayList<>();
+        this.pendingNewObjects = new ArrayList<>();
         this.isRunning = false;
     }
 
@@ -59,10 +62,7 @@ public class Scene {
         if (!isRunning) {
             gameObjects.add(go);
         } else {
-            gameObjects.add(go);
-            go.start();
-            this.renderer.add(go);
-            this.physics2D.add(go);
+            this.pendingNewObjects.add(go);
         }
     }
 
@@ -109,6 +109,18 @@ public class Scene {
                 i--;
             }
         }
+
+        for (GameObject go : pendingNewObjects) {
+            gameObjects.add(go);
+            go.start();
+            this.renderer.add(go);
+            this.physics2D.add(go);
+        }
+        pendingNewObjects.clear();
+    }
+
+    public Physics2D getPhysics() {
+        return this.physics2D;
     }
 
     public void update(float dt) {
@@ -127,6 +139,14 @@ public class Scene {
                 i--;
             }
         }
+
+        for (GameObject go : pendingNewObjects) {
+            gameObjects.add(go);
+            go.start();
+            this.renderer.add(go);
+            this.physics2D.add(go);
+        }
+        pendingNewObjects.clear();
     }
 
     public void render() {

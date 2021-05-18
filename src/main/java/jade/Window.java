@@ -12,6 +12,7 @@ import org.lwjgl.openal.ALC;
 import org.lwjgl.openal.ALCCapabilities;
 import org.lwjgl.openal.ALCapabilities;
 import org.lwjgl.opengl.GL;
+import physics2d.Physics2D;
 import renderer.*;
 import scenes.LevelEditorSceneInitializer;
 import scenes.LevelSceneInitializer;
@@ -70,8 +71,10 @@ public class Window implements Observer {
     }
 
     public static Scene getScene() {
-        return get().currentScene;
+        return currentScene;
     }
+
+    public static Physics2D getPhysics() { return currentScene.getPhysics(); }
 
     public static ImGuiLayer getImGuiLayer() { return get().imguiLayer; }
 

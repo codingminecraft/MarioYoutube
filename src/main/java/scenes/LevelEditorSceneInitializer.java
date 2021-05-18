@@ -125,6 +125,9 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
                         b2d.setHalfSize(new Vector2f(0.25f, 0.25f));
                         object.addComponent(b2d);
                         object.addComponent(new Ground());
+                        if (i == 12) {
+                            object.addComponent(new BreakableBrick());
+                        }
                         levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
                     }
                     ImGui.popID();

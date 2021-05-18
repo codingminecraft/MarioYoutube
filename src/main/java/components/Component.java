@@ -129,6 +129,14 @@ public abstract class Component {
 
     }
 
+    public void preSolve(GameObject collidingObject, Contact contact) {
+
+    }
+
+    public void postSolve(GameObject collidingObject, Contact contact) {
+
+    }
+
     public int getUid() {
         return this.uid;
     }

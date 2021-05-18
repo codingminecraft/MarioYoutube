@@ -22,12 +22,18 @@ public class Rigidbody2D extends Component {
     @Override
     public void update(float dt) {
         if (rawBody != null) {
-            this.gameObject.transform.position.set(
-                    rawBody.getPosition().x, rawBody.getPosition().y
-            );
-            this.gameObject.transform.rotation = (float)Math.toDegrees(rawBody.getAngle());
-            Vec2 vel = rawBody.getLinearVelocity();
-            this.velocity = new Vector2f(vel.x, vel.y);
+            if (this.bodyType == BodyType.Dynamic) {
+                this.gameObject.transform.position.set(
+                        rawBody.getPosition().x, rawBody.getPosition().y
+                );
+                this.gameObject.transform.rotation = (float) Math.toDegrees(rawBody.getAngle());
+                Vec2 vel = rawBody.getLinearVelocity();
+                this.velocity = new Vector2f(vel.x, vel.y);
+            } else {
+                this.rawBody.setTransform(
+                        new Vec2(gameObject.transform.position.x, gameObject.transform.position.y),
+                        0.0f);
+            }
         }
     }
 

@@ -37,11 +37,27 @@ public class JadeContactListener implements ContactListener {
 
     @Override
     public void preSolve(Contact contact, Manifold manifold) {
+        GameObject objA = (GameObject)contact.getFixtureA().getUserData();
+        GameObject objB = (GameObject)contact.getFixtureB().getUserData();
+        for (Component c : objA.getAllComponents()) {
+            c.preSolve(objB, contact);
+        }
 
+        for (Component c : objB.getAllComponents()) {
+            c.preSolve(objA, contact);
+        }
     }
 
     @Override
     public void postSolve(Contact contact, ContactImpulse contactImpulse) {
+        GameObject objA = (GameObject)contact.getFixtureA().getUserData();
+        GameObject objB = (GameObject)contact.getFixtureB().getUserData();
+        for (Component c : objA.getAllComponents()) {
+            c.postSolve(objB, contact);
+        }
 
+        for (Component c : objB.getAllComponents()) {
+            c.postSolve(objA, contact);
+        }
     }
 }
