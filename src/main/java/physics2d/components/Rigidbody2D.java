@@ -51,6 +51,7 @@ public class Rigidbody2D extends Component {
 
     public void setVelocity(Vector2f velocity) {
         this.velocity = velocity;
+        this.rawBody.setLinearVelocity(new Vec2(velocity.x, velocity.y));
     }
 
     public float getAngularDamping() {

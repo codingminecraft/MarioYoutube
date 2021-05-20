@@ -10,6 +10,7 @@ public class Box2DCollider extends Component {
     private Vector2f halfSize = new Vector2f(1);
     private Vector2f offset = new Vector2f();
     private transient boolean resetFixtureNextFrame = false;
+    private boolean isSensor = false;
 
     public Vector2f getOffset() {
         return this.offset;
@@ -59,5 +60,13 @@ public class Box2DCollider extends Component {
         if (resetFixtureNextFrame) {
             resetFixture();
         }
+    }
+
+    public void setSensor(boolean isSensor) {
+        this.isSensor = isSensor;
+    }
+
+    public boolean getIsSensor() {
+        return this.isSensor;
     }
 }

@@ -44,6 +44,7 @@ public class Scene {
 
     public void init() {
         this.camera = new Camera(new Vector2f(0, 0));
+        this.camera.setZoom(1.3f);
         this.sceneInitializer.loadResources(this);
         this.sceneInitializer.init(this);
     }

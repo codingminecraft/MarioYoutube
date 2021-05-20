@@ -42,9 +42,10 @@ public abstract class Block extends Component {
     }
 
     @Override
-    public void beginCollision(GameObject obj, Contact contact) {
+    public void beginCollision(GameObject obj, Contact contact, Vector2f contactNormal) {
         PlayerController playerController = obj.getComponent(PlayerController.class);
-        if (active && playerController != null && contact.m_manifold.localNormal.y < -0.4f) {
+        // If the player hit the bottom of this block
+        if (active && playerController != null && contactNormal.y < -0.8f) {
             doBopAnimation = true;
             AssetPool.getSound("assets/sounds/bump.ogg").play();
             playerHit(playerController);

@@ -63,6 +63,9 @@ public class QuestionBlock extends Block {
     }
 
     private void spawnFlower() {
-
+        GameObject flower = Prefabs.generateFlower();
+        flower.transform.position.set(gameObject.transform.position);
+        flower.transform.position.y += 0.25f;
+        Window.getScene().addGameObjectToScene(flower);
     }
 }

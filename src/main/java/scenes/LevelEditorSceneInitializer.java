@@ -48,6 +48,9 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
         AssetPool.addSpritesheet("assets/images/spritesheet.png",
                 new Spritesheet(AssetPool.getTexture("assets/images/spritesheet.png"),
                         16, 16, 26, 0));
+        AssetPool.addSpritesheet("assets/images/bigSpritesheet.png",
+                new Spritesheet(AssetPool.getTexture("assets/images/bigSpritesheet.png"),
+                        16, 32, 42, 0));
         AssetPool.addSpritesheet("assets/images/items.png",
                 new Spritesheet(AssetPool.getTexture("assets/images/items.png"),
                         16, 16, 43, 0));
@@ -106,8 +109,9 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
                 ImGui.getStyle().getItemSpacing(itemSpacing);
 
                 float windowX2 = windowPos.x + windowSize.x;
-                for (int i = 0; i < 38; i++) {
+                for (int i = 0; i < sprites.size(); i++) {
                     if (i == 34) continue;
+                    if (i >= 38 && i < 61) continue;
 
                     Sprite sprite = sprites.getSprite(i);
                     float spriteWidth = sprite.getWidth() * 4;

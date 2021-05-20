@@ -2,10 +2,14 @@ package components;
 
 import jade.GameObject;
 import jade.KeyListener;
+import jade.Window;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
+import physics2d.RaycastInfo;
+import physics2d.RaycastInfoCallback;
 import physics2d.components.PillboxCollider;
 import physics2d.components.Rigidbody2D;
+import renderer.DebugDraw;
 import util.AssetPool;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -19,19 +23,17 @@ public class PlayerController extends Component {
     }
 
     public float walkSpeed = 1.0f;
-    public float jumpBoost = 0.04f;
+    public float jumpBoost = 0.23f;
     public float maxWalkSpeed = 1.0f;
+    public boolean onGround = false;
 
     private PlayerState playerState = PlayerState.Small;
     private transient Rigidbody2D rb;
     private transient StateMachine stateMachine;
-    private transient float bigJumpBoostFactor = 1.4f;
+    private transient float bigJumpBoostFactor = 1.05f;
     private transient float playerWidth = 0.25f;
-    private transient int onGround = 0;
-    private transient float debounceBounce = 0.0f;
-    private float bounceHoldTime = 0.15f;
-    private transient float offGroundDebounce = 0.0f;
-    private transient float offGroundDebounceTime = 0.1f;
+    private transient int jumpTime = 0;
+    private transient float yJumpSpeed = 0.0f;
 
     @Override
     public void start() {
@@ -67,38 +69,38 @@ public class PlayerController extends Component {
             this.stateMachine.trigger("stopRunning");
         }
 
-        if ((debounceBounce >= 0 || onGround > 0) && KeyListener.isKeyPressed(GLFW_KEY_SPACE)) {
-            this.rb.addImpulse(new Vector2f(0.0f, jumpBoost));
-            debounceBounce -= dt;
-            AssetPool.getSound("assets/sounds/jump-small.ogg").play();
-        }
-
-        if (onGround > 0 && debounceBounce != bounceHoldTime) {
-            debounceBounce = bounceHoldTime;
-        }
-
-        if (onGround == 0) {
-            offGroundDebounce -= dt;
-            if (offGroundDebounce < 0) {
-                this.stateMachine.trigger("jump");
-                offGroundDebounce = offGroundDebounceTime;
+        checkOnGround();
+        if (KeyListener.isKeyPressed(GLFW_KEY_SPACE) || (jumpTime < 0 && !onGround)) {
+            if (jumpTime < 0) {
+                jumpTime++;
+            } else if (onGround) {
+                AssetPool.getSound("assets/sounds/jump-small.ogg").play();
+                yJumpSpeed = jumpBoost;
+                jumpTime = 16;
+            } else if (jumpTime > 0) {
+                jumpTime--;
             }
+            float yForce = jumpTime * yJumpSpeed;
+            this.rb.addVelocity(new Vector2f(0, yForce));
+        }
+
+        if (!onGround) {
+            stateMachine.trigger("jump");
+        } else {
+            stateMachine.trigger("stopJumping");
         }
     }
 
-    @Override
-    public void beginCollision(GameObject obj, Contact contact) {
-        if (obj.getComponent(Ground.class) != null && contact.m_manifold.localNormal.y > 0.4f) {
-            onGround++;
-            this.stateMachine.trigger("stopJumping");
-        }
-    }
+    public void checkOnGround() {
+        // TODO: Do two raycasts towards the width of mario to check if he's on the ground
+        Vector2f raycastBegin = this.gameObject.transform.position;
+        float yVal = playerState == PlayerState.Small ? -0.14f : -0.24f;
+        Vector2f raycastEnd = new Vector2f(raycastBegin).add(0.0f, yVal);
 
-    @Override
-    public void endCollision(GameObject obj, Contact contact) {
-        if (obj.getComponent(Ground.class) != null && contact.m_manifold.localNormal.y > 0.4f) {
-            onGround--;
-        }
+        RaycastInfo info = Window.getPhysics().raycast(gameObject, raycastBegin, raycastEnd);
+        onGround = info.hit && info.hitObject != null && info.hitObject.getComponent(Ground.class) != null;
+
+        //DebugDraw.addLine2D(raycastBegin, raycastEnd);
     }
 
     public void powerup() {
@@ -109,13 +111,15 @@ public class PlayerController extends Component {
             PillboxCollider pb = gameObject.getComponent(PillboxCollider.class);
             if (pb != null) {
                 jumpBoost *= bigJumpBoostFactor;
+                walkSpeed *= bigJumpBoostFactor;
                 pb.setHeight(0.63f);
             }
-
-            stateMachine.trigger("grow");
         } else if (playerState == PlayerState.Big) {
             playerState = PlayerState.Fire;
+            AssetPool.getSound("assets/sounds/powerup.ogg").play();
         }
+
+        stateMachine.trigger("powerup");
     }
 
     public void goInvincible() {

@@ -24,8 +24,10 @@ public class Prefabs {
 
     public static GameObject generateMario() {
         Spritesheet playerSprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
+        Spritesheet bigPlayerSprites = AssetPool.getSpritesheet("assets/images/bigSpritesheet.png");
         GameObject mario = generateSpriteObject(playerSprites.getSprite(0), 0.25f, 0.25f);
 
+        // Little mario animations
         AnimationState run = new AnimationState();
         run.title = "Run";
         float defaultFrameTime = 0.2f;
@@ -50,11 +52,75 @@ public class Prefabs {
         jump.addFrame(playerSprites.getSprite(5), 0.1f);
         jump.setLoop(false);
 
+        // Big mario animations
+        AnimationState bigRun = new AnimationState();
+        bigRun.title = "BigRun";
+        bigRun.addFrame(bigPlayerSprites.getSprite(0), defaultFrameTime);
+        bigRun.addFrame(bigPlayerSprites.getSprite(1), defaultFrameTime);
+        bigRun.addFrame(bigPlayerSprites.getSprite(2), defaultFrameTime);
+        bigRun.addFrame(bigPlayerSprites.getSprite(3), defaultFrameTime);
+        bigRun.addFrame(bigPlayerSprites.getSprite(2), defaultFrameTime);
+        bigRun.addFrame(bigPlayerSprites.getSprite(1), defaultFrameTime);
+        bigRun.setLoop(true);
+
+        AnimationState bigSwitchDirection = new AnimationState();
+        bigSwitchDirection.title = "Big Switch Direction";
+        bigSwitchDirection.addFrame(bigPlayerSprites.getSprite(4), 0.1f);
+        bigSwitchDirection.setLoop(false);
+
+        AnimationState bigIdle = new AnimationState();
+        bigIdle.title = "BigIdle";
+        bigIdle.addFrame(bigPlayerSprites.getSprite(0), 0.1f);
+        bigIdle.setLoop(false);
+
+        AnimationState bigJump = new AnimationState();
+        bigJump.title = "BigJump";
+        bigJump.addFrame(bigPlayerSprites.getSprite(5), 0.1f);
+        bigJump.setLoop(false);
+
+        // Fire mario animations
+        int fireOffset = 21;
+        AnimationState fireRun = new AnimationState();
+        fireRun.title = "FireRun";
+        fireRun.addFrame(bigPlayerSprites.getSprite(fireOffset + 0), defaultFrameTime);
+        fireRun.addFrame(bigPlayerSprites.getSprite(fireOffset + 1), defaultFrameTime);
+        fireRun.addFrame(bigPlayerSprites.getSprite(fireOffset + 2), defaultFrameTime);
+        fireRun.addFrame(bigPlayerSprites.getSprite(fireOffset + 3), defaultFrameTime);
+        fireRun.addFrame(bigPlayerSprites.getSprite(fireOffset + 2), defaultFrameTime);
+        fireRun.addFrame(bigPlayerSprites.getSprite(fireOffset + 1), defaultFrameTime);
+        fireRun.setLoop(true);
+
+        AnimationState fireSwitchDirection = new AnimationState();
+        fireSwitchDirection.title = "Fire Switch Direction";
+        fireSwitchDirection.addFrame(bigPlayerSprites.getSprite(fireOffset + 4), 0.1f);
+        fireSwitchDirection.setLoop(false);
+
+        AnimationState fireIdle = new AnimationState();
+        fireIdle.title = "FireIdle";
+        fireIdle.addFrame(bigPlayerSprites.getSprite(fireOffset + 0), 0.1f);
+        fireIdle.setLoop(false);
+
+        AnimationState fireJump = new AnimationState();
+        fireJump.title = "FireJump";
+        fireJump.addFrame(bigPlayerSprites.getSprite(fireOffset + 5), 0.1f);
+        fireJump.setLoop(false);
+
         StateMachine stateMachine = new StateMachine();
         stateMachine.addState(run);
         stateMachine.addState(idle);
         stateMachine.addState(switchDirection);
         stateMachine.addState(jump);
+
+        stateMachine.addState(bigRun);
+        stateMachine.addState(bigIdle);
+        stateMachine.addState(bigSwitchDirection);
+        stateMachine.addState(bigJump);
+
+        stateMachine.addState(fireRun);
+        stateMachine.addState(fireIdle);
+        stateMachine.addState(fireSwitchDirection);
+        stateMachine.addState(fireJump);
+
         stateMachine.setDefaultState(idle.title);
         stateMachine.addState(run.title, switchDirection.title, "switchDirection");
         stateMachine.addState(run.title, idle.title, "stopRunning");
@@ -65,6 +131,44 @@ public class Prefabs {
         stateMachine.addState(idle.title, run.title, "startRunning");
         stateMachine.addState(idle.title, jump.title, "jump");
         stateMachine.addState(jump.title, idle.title, "stopJumping");
+
+        stateMachine.addState(bigRun.title, bigSwitchDirection.title, "switchDirection");
+        stateMachine.addState(bigRun.title, bigIdle.title, "stopRunning");
+        stateMachine.addState(bigRun.title, bigJump.title, "jump");
+        stateMachine.addState(bigSwitchDirection.title, bigIdle.title, "stopRunning");
+        stateMachine.addState(bigSwitchDirection.title, bigRun.title, "startRunning");
+        stateMachine.addState(bigSwitchDirection.title, bigJump.title, "jump");
+        stateMachine.addState(bigIdle.title, bigRun.title, "startRunning");
+        stateMachine.addState(bigIdle.title, bigJump.title, "jump");
+        stateMachine.addState(bigJump.title, bigIdle.title, "stopJumping");
+
+        stateMachine.addState(fireRun.title, fireSwitchDirection.title, "switchDirection");
+        stateMachine.addState(fireRun.title, fireIdle.title, "stopRunning");
+        stateMachine.addState(fireRun.title, fireJump.title, "jump");
+        stateMachine.addState(fireSwitchDirection.title, fireIdle.title, "stopRunning");
+        stateMachine.addState(fireSwitchDirection.title, fireRun.title, "startRunning");
+        stateMachine.addState(fireSwitchDirection.title, fireJump.title, "jump");
+        stateMachine.addState(fireIdle.title, fireRun.title, "startRunning");
+        stateMachine.addState(fireIdle.title, fireJump.title, "jump");
+        stateMachine.addState(fireJump.title, fireIdle.title, "stopJumping");
+
+        stateMachine.addState(run.title, bigRun.title, "powerup");
+        stateMachine.addState(idle.title, bigIdle.title, "powerup");
+        stateMachine.addState(switchDirection.title, bigSwitchDirection.title, "powerup");
+        stateMachine.addState(jump.title, bigJump.title, "powerup");
+        stateMachine.addState(bigRun.title, fireRun.title, "powerup");
+        stateMachine.addState(bigIdle.title, fireIdle.title, "powerup");
+        stateMachine.addState(bigSwitchDirection.title, fireSwitchDirection.title, "powerup");
+        stateMachine.addState(bigJump.title, fireJump.title, "powerup");
+
+        stateMachine.addState(bigRun.title, run.title, "damage");
+        stateMachine.addState(bigIdle.title, idle.title, "damage");
+        stateMachine.addState(bigSwitchDirection.title, switchDirection.title, "damage");
+        stateMachine.addState(bigJump.title, jump.title, "damage");
+        stateMachine.addState(fireRun.title, bigRun.title, "damage");
+        stateMachine.addState(fireIdle.title, bigIdle.title, "damage");
+        stateMachine.addState(fireSwitchDirection.title, bigSwitchDirection.title, "damage");
+        stateMachine.addState(fireJump.title, bigJump.title, "damage");
         mario.addComponent(stateMachine);
 
         PillboxCollider pb = new PillboxCollider();
@@ -158,5 +262,23 @@ public class Prefabs {
         mushroom.addComponent(new Mushroom());
 
         return mushroom;
+    }
+
+    public static GameObject generateFlower() {
+        Spritesheet items = AssetPool.getSpritesheet("assets/images/items.png");
+        GameObject flower = generateSpriteObject(items.getSprite(20), 0.25f, 0.25f);
+
+        Rigidbody2D rb = new Rigidbody2D();
+        rb.setBodyType(BodyType.Dynamic);
+        rb.setFixedRotation(true);
+        rb.setContinuousCollision(false);
+        flower.addComponent(rb);
+
+        CircleCollider b2d = new CircleCollider();
+        b2d.setRadius(0.14f);
+        flower.addComponent(b2d);
+        flower.addComponent(new Flower());
+
+        return flower;
     }
 }

@@ -38,6 +38,16 @@ public class KeyControls extends Component {
                 Window.getScene().addGameObjectToScene(copy);
                 propertiesWindow.addActiveGameObject(go);
             }
+        } else if (KeyListener.isKeyPressed(GLFW_KEY_PAGE_DOWN) && debounce < 0) {
+            debounce = debounceTime;
+            for (GameObject go : activeGameObjects) {
+              go.transform.zIndex--;
+          }
+        } else if (KeyListener.isKeyPressed(GLFW_KEY_PAGE_UP) && debounce < 0) {
+            debounce = debounceTime;
+            for (GameObject go : activeGameObjects) {
+                go.transform.zIndex++;
+            }
         } else if (KeyListener.keyBeginPress(GLFW_KEY_DELETE)) {
             for (GameObject go : activeGameObjects) {
                 go.destroy();

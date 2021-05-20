@@ -5,6 +5,7 @@ import imgui.ImGui;
 import imgui.type.ImInt;
 import jade.GameObject;
 import org.jbox2d.callbacks.ContactFilter;
+import org.jbox2d.collision.WorldManifold;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -121,19 +122,19 @@ public abstract class Component {
 
     }
 
-    public void beginCollision(GameObject collidingObject, Contact contact) {
+    public void beginCollision(GameObject collidingObject, Contact contact, Vector2f contactNormal) {
 
     }
 
-    public void endCollision(GameObject collidingObject, Contact contact) {
+    public void endCollision(GameObject collidingObject, Contact contact, Vector2f contactNormal) {
 
     }
 
-    public void preSolve(GameObject collidingObject, Contact contact) {
+    public void preSolve(GameObject collidingObject, Contact contact, Vector2f contactNormal) {
 
     }
 
-    public void postSolve(GameObject collidingObject, Contact contact) {
+    public void postSolve(GameObject collidingObject, Contact contact, Vector2f contactNormal) {
 
     }
 

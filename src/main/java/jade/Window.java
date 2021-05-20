@@ -258,6 +258,7 @@ public class Window implements Observer {
         switch (event.type) {
             case GameEngineStartPlay:
                 this.runtimePlaying = true;
+                imguiLayer.getPropertiesWindow().clearSelected();
                 currentScene.save();
                 Window.changeScene(new LevelSceneInitializer());
                 break;

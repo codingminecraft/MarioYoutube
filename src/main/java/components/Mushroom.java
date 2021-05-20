@@ -13,6 +13,7 @@ public class Mushroom extends Component {
     private transient Rigidbody2D rb;
     private transient Vector2f speed = new Vector2f(1.0f, 0.0f);
     private transient float maxSpeed = 0.8f;
+    private transient boolean hitPlayer = false;
 
     @Override
     public void start() {
@@ -27,21 +28,23 @@ public class Mushroom extends Component {
         } else if (!goingRight && Math.abs(rb.getVelocity().x) < maxSpeed) {
             rb.addVelocity(new Vector2f(-speed.x, speed.y));
         }
-
-        this.gameObject.getComponent(CircleCollider.class).editorUpdate(dt);
     }
 
     @Override
-    public void beginCollision(GameObject obj, Contact contact) {
-        if (contact.m_manifold.localNormal.y < 0.3f) {
-            goingRight = contact.m_manifold.localNormal.x > 0;
+    public void beginCollision(GameObject obj, Contact contact, Vector2f contactNormal) {
+        // If one of the sides of the mushroom was hit, figure out which way we need to go
+        if (Math.abs(contactNormal.y) < 0.1f) {
+            goingRight = contactNormal.x < 0;
         }
 
         PlayerController playerController = obj.getComponent(PlayerController.class);
         if (playerController != null) {
             contact.setEnabled(false);
-            playerController.powerup();
-            this.gameObject.destroy();
+            if (!hitPlayer) {
+                playerController.powerup();
+                this.gameObject.destroy();
+                hitPlayer = true;
+            }
         }
     }
 }

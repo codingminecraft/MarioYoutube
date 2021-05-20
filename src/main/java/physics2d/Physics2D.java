@@ -3,7 +3,6 @@ package physics2d;
 import jade.GameObject;
 import jade.Transform;
 import org.jbox2d.collision.shapes.CircleShape;
-import org.jbox2d.collision.shapes.MassData;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.*;
@@ -192,6 +191,12 @@ public class Physics2D {
         body.createFixture(bottomCircleFixtureDef);
     }
 
+    public RaycastInfo raycast(GameObject requestingObject, Vector2f point1, Vector2f point2) {
+        RaycastInfo callback = new RaycastInfo(requestingObject);
+        world.raycast(callback, new Vec2(point1.x, point1.y), new Vec2(point2.x, point2.y));
+        return callback;
+    }
+
     public boolean isLocked() {
         return this.world.isLocked();
     }
@@ -205,4 +210,5 @@ public class Physics2D {
         }
         return size;
     }
+
 }

@@ -5,7 +5,9 @@ import jade.GameObject;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
+import org.jbox2d.collision.WorldManifold;
 import org.jbox2d.dynamics.contacts.Contact;
+import org.joml.Vector2f;
 import physics2d.components.Rigidbody2D;
 
 public class JadeContactListener implements ContactListener {
@@ -13,12 +15,17 @@ public class JadeContactListener implements ContactListener {
     public void beginContact(Contact contact) {
         GameObject objA = (GameObject)contact.getFixtureA().getUserData();
         GameObject objB = (GameObject)contact.getFixtureB().getUserData();
+        WorldManifold worldManifold = new WorldManifold();
+        contact.getWorldManifold(worldManifold);
+        Vector2f aNormal = new Vector2f(worldManifold.normal.x, worldManifold.normal.y);
+        Vector2f bNormal = new Vector2f(aNormal).negate();
+
         for (Component c : objA.getAllComponents()) {
-            c.beginCollision(objB, contact);
+            c.beginCollision(objB, contact, aNormal);
         }
 
         for (Component c : objB.getAllComponents()) {
-            c.beginCollision(objA, contact);
+            c.beginCollision(objA, contact, bNormal);
         }
     }
 
@@ -26,12 +33,17 @@ public class JadeContactListener implements ContactListener {
     public void endContact(Contact contact) {
         GameObject objA = (GameObject)contact.m_fixtureA.m_userData;
         GameObject objB = (GameObject)contact.m_fixtureB.m_userData;
+        WorldManifold worldManifold = new WorldManifold();
+        contact.getWorldManifold(worldManifold);
+        Vector2f aNormal = new Vector2f(worldManifold.normal.x, worldManifold.normal.y);
+        Vector2f bNormal = new Vector2f(aNormal).negate();
+
         for (Component c : objA.getAllComponents()) {
-            c.endCollision(objB, contact);
+            c.endCollision(objB, contact, aNormal);
         }
 
         for (Component c : objB.getAllComponents()) {
-            c.endCollision(objA, contact);
+            c.endCollision(objA, contact, bNormal);
         }
     }
 
@@ -39,12 +51,17 @@ public class JadeContactListener implements ContactListener {
     public void preSolve(Contact contact, Manifold manifold) {
         GameObject objA = (GameObject)contact.getFixtureA().getUserData();
         GameObject objB = (GameObject)contact.getFixtureB().getUserData();
+        WorldManifold worldManifold = new WorldManifold();
+        contact.getWorldManifold(worldManifold);
+        Vector2f aNormal = new Vector2f(worldManifold.normal.x, worldManifold.normal.y);
+        Vector2f bNormal = new Vector2f(aNormal).negate();
+
         for (Component c : objA.getAllComponents()) {
-            c.preSolve(objB, contact);
+            c.preSolve(objB, contact, aNormal);
         }
 
         for (Component c : objB.getAllComponents()) {
-            c.preSolve(objA, contact);
+            c.preSolve(objA, contact, bNormal);
         }
     }
 
@@ -52,12 +69,17 @@ public class JadeContactListener implements ContactListener {
     public void postSolve(Contact contact, ContactImpulse contactImpulse) {
         GameObject objA = (GameObject)contact.getFixtureA().getUserData();
         GameObject objB = (GameObject)contact.getFixtureB().getUserData();
+        WorldManifold worldManifold = new WorldManifold();
+        contact.getWorldManifold(worldManifold);
+        Vector2f aNormal = new Vector2f(worldManifold.normal.x, worldManifold.normal.y);
+        Vector2f bNormal = new Vector2f(aNormal).negate();
+
         for (Component c : objA.getAllComponents()) {
-            c.postSolve(objB, contact);
+            c.postSolve(objB, contact, aNormal);
         }
 
         for (Component c : objB.getAllComponents()) {
-            c.postSolve(objA, contact);
+            c.postSolve(objA, contact, bNormal);
         }
     }
 }
