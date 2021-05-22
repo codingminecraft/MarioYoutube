@@ -1,6 +1,7 @@
 package physics2d.components;
 
 import components.Component;
+import jade.Window;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.joml.Vector2f;
@@ -15,6 +16,7 @@ public class Rigidbody2D extends Component {
     private float friction = 0.1f;
     public float angularVelocity = 0.0f;
     public float gravityScale = 1.0f;
+    private boolean isSensor = false;
 
     private boolean fixedRotation = false;
     private boolean continuousCollision = true;
@@ -74,6 +76,24 @@ public class Rigidbody2D extends Component {
 
     public float getAngularDamping() {
         return angularDamping;
+    }
+
+    public void setIsSensor() {
+        isSensor = true;
+        if (rawBody != null) {
+            Window.getPhysics().setIsSensor(this);
+        }
+    }
+
+    public boolean isSensor() {
+        return this.isSensor;
+    }
+
+    public void setNotSensor() {
+        isSensor = false;
+        if (rawBody != null) {
+            Window.getPhysics().setNotSensor(this);
+        }
     }
 
     public void setAngularDamping(float angularDamping) {

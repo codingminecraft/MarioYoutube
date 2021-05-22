@@ -5,10 +5,12 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import jade.*;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 import physics2d.components.Box2DCollider;
 import physics2d.components.Rigidbody2D;
 import physics2d.enums.BodyType;
 import physics2dtmp.PhysicsSystem2D;
+import renderer.DebugDraw;
 import util.AssetPool;
 
 import java.io.File;
@@ -187,6 +189,7 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
             }
 
             if (ImGui.beginTabItem("Prefabs")) {
+                int uid = 0;
                 Spritesheet playerSprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
                 Sprite sprite = playerSprites.getSprite(0);
                 float spriteWidth = sprite.getWidth() * 4;
@@ -194,21 +197,35 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
                 int id = sprite.getTexId();
                 Vector2f[] texCoords = sprite.getTexCoords();
 
+                ImGui.pushID(uid++);
                 if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
                     GameObject object = Prefabs.generateMario();
                     levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
                 }
+                ImGui.popID();
                 ImGui.sameLine();
 
                 Spritesheet items = AssetPool.getSpritesheet("assets/images/items.png");
                 sprite = items.getSprite(0);
                 id = sprite.getTexId();
                 texCoords = sprite.getTexCoords();
+                ImGui.pushID(uid++);
                 if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
                     GameObject object = Prefabs.generateQuestionBlock();
                     levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
                 }
+                ImGui.popID();
+                ImGui.sameLine();
 
+                sprite = playerSprites.getSprite(14);
+                id = sprite.getTexId();
+                texCoords = sprite.getTexCoords();
+                ImGui.pushID(uid++);
+                if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
+                    GameObject object = Prefabs.generateGoomba();
+                    levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
+                }
+                ImGui.popID();
                 ImGui.endTabItem();
             }
 

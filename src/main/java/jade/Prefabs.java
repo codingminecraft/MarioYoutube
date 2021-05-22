@@ -105,11 +105,17 @@ public class Prefabs {
         fireJump.addFrame(bigPlayerSprites.getSprite(fireOffset + 5), 0.1f);
         fireJump.setLoop(false);
 
+        AnimationState die = new AnimationState();
+        die.title = "Die";
+        die.addFrame(playerSprites.getSprite(6), 0.1f);
+        die.setLoop(false);
+
         StateMachine stateMachine = new StateMachine();
         stateMachine.addState(run);
         stateMachine.addState(idle);
         stateMachine.addState(switchDirection);
         stateMachine.addState(jump);
+        stateMachine.addState(die);
 
         stateMachine.addState(bigRun);
         stateMachine.addState(bigIdle);
@@ -169,6 +175,19 @@ public class Prefabs {
         stateMachine.addState(fireIdle.title, bigIdle.title, "damage");
         stateMachine.addState(fireSwitchDirection.title, bigSwitchDirection.title, "damage");
         stateMachine.addState(fireJump.title, bigJump.title, "damage");
+
+        stateMachine.addState(run.title, die.title, "die");
+        stateMachine.addState(switchDirection.title, die.title, "die");
+        stateMachine.addState(idle.title, die.title, "die");
+        stateMachine.addState(jump.title, die.title, "die");
+        stateMachine.addState(bigRun.title, run.title, "die");
+        stateMachine.addState(bigSwitchDirection.title, switchDirection.title, "die");
+        stateMachine.addState(bigIdle.title, idle.title, "die");
+        stateMachine.addState(bigJump.title, jump.title, "die");
+        stateMachine.addState(fireRun.title, bigRun.title, "die");
+        stateMachine.addState(fireSwitchDirection.title, bigSwitchDirection.title, "die");
+        stateMachine.addState(fireIdle.title, bigIdle.title, "die");
+        stateMachine.addState(fireJump.title, bigJump.title, "die");
         mario.addComponent(stateMachine);
 
         PillboxCollider pb = new PillboxCollider();
@@ -224,6 +243,42 @@ public class Prefabs {
         return questionBlock;
     }
 
+    public static GameObject generateGoomba() {
+        Spritesheet playerSprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
+        GameObject goomba = generateSpriteObject(playerSprites.getSprite(14), 0.25f, 0.25f);
+
+        AnimationState walk = new AnimationState();
+        walk.title = "Walk";
+        float defaultFrameTime = 0.23f;
+        walk.addFrame(playerSprites.getSprite(14), defaultFrameTime);
+        walk.addFrame(playerSprites.getSprite(15), defaultFrameTime);
+        walk.setLoop(true);
+
+        AnimationState squashed = new AnimationState();
+        squashed.title = "Squashed";
+        squashed.addFrame(playerSprites.getSprite(16), 0.1f);
+        squashed.setLoop(false);
+
+        StateMachine stateMachine = new StateMachine();
+        stateMachine.addState(walk);
+        stateMachine.addState(squashed);
+        stateMachine.setDefaultState(walk.title);
+        stateMachine.addState(walk.title, squashed.title, "squashMe");
+        goomba.addComponent(stateMachine);
+        goomba.addComponent(new GoombaAI());
+
+        Rigidbody2D rb = new Rigidbody2D();
+        rb.setBodyType(BodyType.Dynamic);
+        rb.setMass(0.1f);
+        rb.setFixedRotation(true);
+        goomba.addComponent(rb);
+        CircleCollider b2d = new CircleCollider();
+        b2d.setRadius(0.12f);
+        goomba.addComponent(b2d);
+
+        return goomba;
+    }
+
     public static GameObject generateBlockCoin() {
         Spritesheet items = AssetPool.getSpritesheet("assets/images/items.png");
         GameObject coinObject = generateSpriteObject(items.getSprite(7), 0.25f, 0.25f);
@@ -269,7 +324,7 @@ public class Prefabs {
         GameObject flower = generateSpriteObject(items.getSprite(20), 0.25f, 0.25f);
 
         Rigidbody2D rb = new Rigidbody2D();
-        rb.setBodyType(BodyType.Dynamic);
+        rb.setBodyType(BodyType.Static);
         rb.setFixedRotation(true);
         rb.setContinuousCollision(false);
         flower.addComponent(rb);
@@ -280,5 +335,24 @@ public class Prefabs {
         flower.addComponent(new Flower());
 
         return flower;
+    }
+
+    public static GameObject generateFireball(Vector2f position) {
+        Spritesheet items = AssetPool.getSpritesheet("assets/images/items.png");
+        GameObject fireball = generateSpriteObject(items.getSprite(32), 0.18f, 0.14f);
+        fireball.transform.position.set(position);
+
+        Rigidbody2D rb = new Rigidbody2D();
+        rb.setBodyType(BodyType.Dynamic);
+        rb.setFixedRotation(true);
+        rb.setContinuousCollision(false);
+        fireball.addComponent(rb);
+
+        CircleCollider b2d = new CircleCollider();
+        b2d.setRadius(0.08f);
+        fireball.addComponent(b2d);
+        fireball.addComponent(new Fireball());
+
+        return fireball;
     }
 }

@@ -11,7 +11,7 @@ public class Camera {
 
     private float projectionWidth = 6;
     private float projectionHeight = 3;
-    private Vector2f projectionSize = new Vector2f(projectionWidth, projectionHeight);
+    public Vector2f projectionSize = new Vector2f(projectionWidth, projectionHeight);
     public Vector4f clearColor = new Vector4f(1, 1, 1, 1);
 
     private float zoom = 1.0f;

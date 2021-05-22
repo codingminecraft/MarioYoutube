@@ -1,5 +1,6 @@
 package renderer;
 
+import jade.Camera;
 import jade.Window;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -123,7 +124,16 @@ public class DebugDraw {
     }
 
     public static void addLine2D(Vector2f from, Vector2f to, Vector3f color, int lifetime) {
-        if (lines.size() >= MAX_LINES) return;
+        Camera camera = Window.getScene().camera();
+        Vector2f cameraLeft = new Vector2f(camera.position).add(new Vector2f(-2.0f, -2.0f));
+        Vector2f cameraRight = new Vector2f(camera.position).add(new Vector2f(camera.projectionSize).mul(camera.getZoom())).add(new Vector2f(4.0f, 4.0f));
+        if (lines.size() >= MAX_LINES ||
+                !(
+                    ((from.x >= cameraLeft.x && from.x <= cameraRight.x) && (from.y >= cameraLeft.y && from.y <= cameraRight.y)) ||
+                    ((to.x >= cameraLeft.x && to.x <= cameraRight.x) && (to.y >= cameraLeft.y && to.y <= cameraRight.y)))
+                ) {
+            return;
+        }
         DebugDraw.lines.add(new Line2D(from, to, color, lifetime));
     }
 

@@ -31,7 +31,7 @@ public class Mushroom extends Component {
     }
 
     @Override
-    public void beginCollision(GameObject obj, Contact contact, Vector2f contactNormal) {
+    public void preSolve(GameObject obj, Contact contact, Vector2f contactNormal) {
         // If one of the sides of the mushroom was hit, figure out which way we need to go
         if (Math.abs(contactNormal.y) < 0.1f) {
             goingRight = contactNormal.x < 0;

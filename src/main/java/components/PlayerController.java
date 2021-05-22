@@ -2,15 +2,19 @@ package components;
 
 import jade.GameObject;
 import jade.KeyListener;
+import jade.Prefabs;
 import jade.Window;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 import physics2d.RaycastInfo;
 import physics2d.RaycastInfoCallback;
 import physics2d.components.PillboxCollider;
 import physics2d.components.Rigidbody2D;
+import physics2d.enums.BodyType;
 import renderer.DebugDraw;
+import scenes.LevelSceneInitializer;
 import util.AssetPool;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -40,16 +44,63 @@ public class PlayerController extends Component {
     private transient int jumpTime = 0;
     private transient Vector2f acceleration = new Vector2f();
     private transient Vector2f velocity = new Vector2f();
+    private transient boolean isDead = false;
+    private transient int enemyBounce = 0;
+
+    private transient boolean deadGoingUp = true;
+    private transient float deadMaxHeight = 0;
+    private transient float deadMinHeight = 0;
+    private transient float hurtInvincibilityTimeLeft = 0.0f;
+    private transient float hurtInvincibilityTime = 1.4f;
+    private transient float blinkTime = 0.0f;
+    private transient SpriteRenderer spr;
 
     @Override
     public void start() {
         this.rb = gameObject.getComponent(Rigidbody2D.class);
+        this.spr = gameObject.getComponent(SpriteRenderer.class);
         this.stateMachine = gameObject.getComponent(StateMachine.class);
         this.rb.setGravityScale(0.0f);
     }
 
     @Override
     public void update(float dt) {
+        if (isDead) {
+            if (this.gameObject.transform.position.y < deadMaxHeight && deadGoingUp) {
+                this.gameObject.transform.position.y += dt * walkSpeed / 2.0f;
+            } else if (this.gameObject.transform.position.y >= deadMaxHeight && deadGoingUp) {
+                deadGoingUp = false;
+            } else if (!deadGoingUp && gameObject.transform.position.y > deadMinHeight) {
+                this.rb.setBodyType(BodyType.Kinematic);
+                this.acceleration.y = Window.getPhysics().getGravity().y * 0.7f;
+                this.velocity.y += this.acceleration.y * dt;
+                this.velocity.y = Math.max(Math.min(this.velocity.y, terminalVelocity.y), -terminalVelocity.y);
+                this.rb.setVelocity(this.velocity);
+                this.rb.setAngularVelocity(0);
+            } else if (!deadGoingUp && gameObject.transform.position.y <= deadMinHeight) {
+                Window.changeScene(new LevelSceneInitializer());
+            }
+            return;
+        }
+
+        if (hurtInvincibilityTimeLeft > 0) {
+            hurtInvincibilityTimeLeft -= dt;
+            blinkTime -= dt;
+
+            if (blinkTime <= 0) {
+                blinkTime = 0.2f;
+                if (spr.getColor().w == 1) {
+                    spr.setColor(new Vector4f(1, 1, 1, 0));
+                } else {
+                    spr.setColor(new Vector4f(1, 1, 1, 1));
+                }
+            }
+        } else {
+            if (spr.getColor().w == 0) {
+                spr.setColor(new Vector4f(1, 1, 1, 1));
+            }
+        }
+
         if (KeyListener.isKeyPressed(GLFW_KEY_RIGHT) || KeyListener.isKeyPressed(GLFW_KEY_D)) {
             this.gameObject.transform.scale.x = playerWidth;
             this.acceleration.x = this.walkSpeed;
@@ -83,6 +134,14 @@ public class PlayerController extends Component {
             }
         }
 
+        if (KeyListener.keyBeginPress(GLFW_KEY_E) && playerState == PlayerState.Fire) {
+            Vector2f position = new Vector2f(this.gameObject.transform.position)
+                    .add(this.gameObject.transform.scale.x > 0 ? new Vector2f(0.26f, 0) : new Vector2f(-0.26f, 0.0f));
+            GameObject fireball = Prefabs.generateFireball(position);
+            fireball.getComponent(Fireball.class).goingRight = this.gameObject.transform.scale.x > 0;
+            Window.getScene().addGameObjectToScene(fireball);
+        }
+
         checkOnGround();
         if ((KeyListener.isKeyPressed(GLFW_KEY_SPACE) && jumpTime > 0) || (onGround && KeyListener.isKeyPressed(GLFW_KEY_SPACE)) ||
                 (groundDebounce > 0 && KeyListener.isKeyPressed(GLFW_KEY_SPACE))) {
@@ -97,6 +156,9 @@ public class PlayerController extends Component {
                 this.velocity.y = 0;
             }
             groundDebounce = 0f;
+        } else if (enemyBounce > 0) {
+            enemyBounce--;
+            this.velocity.y = ((enemyBounce / 2.2f) * jumpBoost);
         } else if (!onGround) {
             if (this.jumpTime > 0) {
                 this.velocity.y *= 0.35f;
@@ -126,7 +188,7 @@ public class PlayerController extends Component {
 
     public void checkOnGround() {
         Vector2f raycastBegin = new Vector2f(this.gameObject.transform.position);
-        float innerPlayerWidth = this.playerWidth * 0.7f;
+        float innerPlayerWidth = this.playerWidth * 0.6f;
         raycastBegin.sub(innerPlayerWidth / 2.0f, 0.0f);
         float yVal = playerState == PlayerState.Small ? -0.14f : -0.24f;
         Vector2f raycastEnd = new Vector2f(raycastBegin).add(0.0f, yVal);
@@ -140,8 +202,26 @@ public class PlayerController extends Component {
         onGround = (info.hit && info.hitObject != null && info.hitObject.getComponent(Ground.class) != null) ||
                 (info2.hit && info2.hitObject != null && info2.hitObject.getComponent(Ground.class) != null);
 
+        if (!isInvincible()) {
+            if (info.hit && info.hitObject != null && info.hitObject.getComponent(GoombaAI.class) != null) {
+                if (info.hitObject.getComponent(GoombaAI.class).isAlive()) {
+                    info.hitObject.getComponent(GoombaAI.class).stomp();
+                    this.enemyBounce();
+                }
+            } else if (info2.hit && info2.hitObject != null && info2.hitObject.getComponent(GoombaAI.class) != null) {
+                if (info2.hitObject.getComponent(GoombaAI.class).isAlive()) {
+                    info2.hitObject.getComponent(GoombaAI.class).stomp();
+                    this.enemyBounce();
+                }
+            }
+        }
+
         //DebugDraw.addLine2D(raycastBegin, raycastEnd, new Vector3f(1, 0, 0));
         //DebugDraw.addLine2D(raycast2Begin, raycast2End);
+    }
+
+    public void enemyBounce() {
+        this.enemyBounce = 8;
     }
 
     public void powerup() {
@@ -175,8 +255,42 @@ public class PlayerController extends Component {
         return this.playerState == PlayerState.Big;
     }
 
+    public void die() {
+        this.stateMachine.trigger("die");
+        if (this.playerState == PlayerState.Small) {
+            this.velocity.set(0, 0);
+            this.acceleration.set(0, 0);
+            this.rb.setVelocity(new Vector2f());
+            this.isDead = true;
+            this.rb.setIsSensor();
+            AssetPool.getSound("assets/sounds/mario_die.ogg").play();
+            deadMaxHeight = this.gameObject.transform.position.y + 0.3f;
+            this.rb.setBodyType(BodyType.Static);
+            if (gameObject.transform.position.y > 0) {
+                deadMinHeight = -0.25f;
+            }
+        } else if (this.playerState == PlayerState.Big) {
+            this.playerState = PlayerState.Small;
+            gameObject.transform.scale.y = 0.25f;
+            PillboxCollider pb = gameObject.getComponent(PillboxCollider.class);
+            if (pb != null) {
+                jumpBoost /= bigJumpBoostFactor;
+                walkSpeed /= bigJumpBoostFactor;
+                pb.setHeight(0.31f);
+            }
+            hurtInvincibilityTimeLeft = hurtInvincibilityTime;
+            AssetPool.getSound("assets/sounds/pipe.ogg").play();
+        } else if (this.playerState == PlayerState.Fire) {
+            this.playerState = PlayerState.Big;
+            hurtInvincibilityTimeLeft = hurtInvincibilityTime;
+            AssetPool.getSound("assets/sounds/pipe.ogg").play();
+        }
+    }
+
     @Override
     public void beginCollision(GameObject collidingObject, Contact contact, Vector2f contactNormal) {
+        if (isDead) return;
+
         if (collidingObject.getComponent(Ground.class) != null) {
             if (Math.abs(contactNormal.x) > 0.8f) {
                 this.velocity.x = 0;
@@ -186,5 +300,24 @@ public class PlayerController extends Component {
                 this.jumpTime = 0;
             }
         }
+    }
+
+    @Override
+    public void preSolve(GameObject collidingObject, Contact contact, Vector2f contactNormal) {
+        if (collidingObject.getComponent(GoombaAI.class) != null && hurtInvincibilityTimeLeft > 0) {
+            contact.setEnabled(false);
+        }
+    }
+
+    public boolean isDead() {
+        return this.isDead;
+    }
+
+    public boolean isInvincible() {
+        return this.playerState == PlayerState.Invincible || this.hurtInvincibilityTimeLeft > 0;
+    }
+
+    public boolean isHurtInvincible() {
+        return this.hurtInvincibilityTimeLeft > 0;
     }
 }

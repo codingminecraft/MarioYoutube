@@ -69,6 +69,28 @@ public class Physics2D {
         }
     }
 
+    public void setIsSensor(Rigidbody2D rb) {
+        Body body = rb.getRawBody();
+        if (body == null) return;
+
+        Fixture fixture = body.getFixtureList();
+        while (fixture != null) {
+            fixture.m_isSensor = true;
+            fixture = fixture.m_next;
+        }
+    }
+
+    public void setNotSensor(Rigidbody2D rb) {
+        Body body = rb.getRawBody();
+        if (body == null) return;
+
+        Fixture fixture = body.getFixtureList();
+        while (fixture != null) {
+            fixture.m_isSensor = false;
+            fixture = fixture.m_next;
+        }
+    }
+
     public void destroyGameObject(GameObject go) {
         Rigidbody2D rb = go.getComponent(Rigidbody2D.class);
         if (rb != null) {
@@ -112,6 +134,7 @@ public class Physics2D {
         fixtureDef.density = 1.0f;
         fixtureDef.friction = rb.getFriction();
         fixtureDef.userData = rb.gameObject;
+        fixtureDef.isSensor = rb.isSensor();
         body.createFixture(fixtureDef);
     }
 
@@ -141,6 +164,7 @@ public class Physics2D {
         fixtureDef.density = 1.0f;
         fixtureDef.friction = rb.getFriction();
         fixtureDef.userData = boxCollider.gameObject;
+        fixtureDef.isSensor = rb.isSensor();
         body.createFixture(fixtureDef);
     }
 
@@ -170,6 +194,7 @@ public class Physics2D {
         boxFixtureDef.density = 1.0f;
         boxFixtureDef.friction = rb.getFriction();
         boxFixtureDef.userData = rb.gameObject;
+        boxFixtureDef.isSensor = rb.isSensor();
         body.createFixture(boxFixtureDef);
 
         CircleShape topCircleShape = new CircleShape();
@@ -180,6 +205,7 @@ public class Physics2D {
         topCircleFixtureDef.density = 1.0f;
         topCircleFixtureDef.friction = rb.getFriction();
         topCircleFixtureDef.userData = rb.gameObject;
+        topCircleFixtureDef.isSensor = rb.isSensor();
         body.createFixture(topCircleFixtureDef);
 
         CircleShape bottomCircleShape = new CircleShape();
@@ -190,6 +216,7 @@ public class Physics2D {
         bottomCircleFixtureDef.density = 1.0f;
         bottomCircleFixtureDef.friction = rb.getFriction();
         bottomCircleFixtureDef.userData = rb.gameObject;
+        bottomCircleFixtureDef.isSensor = rb.isSensor();
         body.createFixture(bottomCircleFixtureDef);
     }
 
