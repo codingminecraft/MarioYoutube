@@ -13,6 +13,8 @@ public class Rigidbody2D extends Component {
     private float mass = 0;
     private BodyType bodyType = BodyType.Dynamic;
     private float friction = 0.1f;
+    public float angularVelocity = 0.0f;
+    public float gravityScale = 1.0f;
 
     private boolean fixedRotation = false;
     private boolean continuousCollision = true;
@@ -22,14 +24,14 @@ public class Rigidbody2D extends Component {
     @Override
     public void update(float dt) {
         if (rawBody != null) {
-            if (this.bodyType == BodyType.Dynamic) {
+            if (this.bodyType == BodyType.Dynamic || this.bodyType == BodyType.Kinematic) {
                 this.gameObject.transform.position.set(
                         rawBody.getPosition().x, rawBody.getPosition().y
                 );
                 this.gameObject.transform.rotation = (float) Math.toDegrees(rawBody.getAngle());
                 Vec2 vel = rawBody.getLinearVelocity();
                 this.velocity = new Vector2f(vel.x, vel.y);
-            } else {
+            } else if (this.bodyType == BodyType.Static) {
                 this.rawBody.setTransform(
                         new Vec2(gameObject.transform.position.x, gameObject.transform.position.y),
                         0.0f);
@@ -50,8 +52,24 @@ public class Rigidbody2D extends Component {
     }
 
     public void setVelocity(Vector2f velocity) {
-        this.velocity = velocity;
-        this.rawBody.setLinearVelocity(new Vec2(velocity.x, velocity.y));
+        this.velocity.set(velocity);
+        if (rawBody != null) {
+            this.rawBody.setLinearVelocity(new Vec2(velocity.x, velocity.y));
+        }
+    }
+
+    public void setAngularVelocity(float angularVelocity) {
+        this.angularVelocity = angularVelocity;
+        if (rawBody != null) {
+            this.rawBody.setAngularVelocity(angularVelocity);
+        }
+    }
+
+    public void setGravityScale(float gravityScale) {
+        this.gravityScale = gravityScale;
+        if (rawBody != null) {
+            this.rawBody.setGravityScale(gravityScale);
+        }
     }
 
     public float getAngularDamping() {

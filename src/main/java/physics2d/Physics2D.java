@@ -37,6 +37,8 @@ public class Physics2D {
             bodyDef.linearDamping = rb.getLinearDamping();
             bodyDef.fixedRotation = rb.isFixedRotation();
             bodyDef.bullet = rb.isContinuousCollision();
+            bodyDef.gravityScale = rb.gravityScale;
+            bodyDef.angularVelocity = rb.angularVelocity;
 
             switch (rb.getBodyType()) {
                 case Kinematic: bodyDef.type = BodyType.KINEMATIC; break;
@@ -211,4 +213,7 @@ public class Physics2D {
         return size;
     }
 
+    public Vector2f getGravity() {
+        return new Vector2f(this.world.getGravity().x, this.world.getGravity().y);
+    }
 }
