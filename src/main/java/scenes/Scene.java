@@ -39,6 +39,10 @@ public class Scene {
         this.isRunning = false;
     }
 
+    public Physics2D getPhysics() {
+        return this.physics2D;
+    }
+
     public void init() {
         this.camera = new Camera(new Vector2f(0, 0));
         this.sceneInitializer.loadResources(this);
