@@ -50,6 +50,9 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
         AssetPool.addSpritesheet("assets/images/spritesheet.png",
                 new Spritesheet(AssetPool.getTexture("assets/images/spritesheet.png"),
                         16, 16, 26, 0));
+        AssetPool.addSpritesheet("assets/images/turtle.png",
+                new Spritesheet(AssetPool.getTexture("assets/images/turtle.png"),
+                        16, 24, 4, 0));
         AssetPool.addSpritesheet("assets/images/bigSpritesheet.png",
                 new Spritesheet(AssetPool.getTexture("assets/images/bigSpritesheet.png"),
                         16, 32, 42, 0));
@@ -223,6 +226,17 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
                 ImGui.pushID(uid++);
                 if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
                     GameObject object = Prefabs.generateGoomba();
+                    levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
+                }
+                ImGui.popID();
+
+                Spritesheet turtle = AssetPool.getSpritesheet("assets/images/turtle.png");
+                sprite = turtle.getSprite(0);
+                id = sprite.getTexId();
+                texCoords = sprite.getTexCoords();
+                ImGui.pushID(uid++);
+                if (ImGui.imageButton(id, spriteWidth, spriteHeight, texCoords[2].x, texCoords[0].y, texCoords[0].x, texCoords[2].y)) {
+                    GameObject object = Prefabs.generateTurtle();
                     levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
                 }
                 ImGui.popID();

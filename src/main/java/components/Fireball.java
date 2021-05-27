@@ -20,17 +20,24 @@ public class Fireball extends Component {
     private transient boolean onGround = false;
     private transient float lifetime = 4.0f;
 
+    private static int fireballCount = 0;
+
+    public static boolean canSpawn() {
+        return fireballCount < 4;
+    }
+
     @Override
     public void start() {
         this.rb = gameObject.getComponent(Rigidbody2D.class);
         this.acceleration.y = Window.getPhysics().getGravity().y * 0.7f;
+        fireballCount++;
     }
 
     @Override
     public void update(float dt) {
         lifetime -= dt;
         if (lifetime < 0) {
-            this.gameObject.destroy();
+            kill();
         }
 
         if (goingRight) {
@@ -70,9 +77,21 @@ public class Fireball extends Component {
     }
 
     @Override
+    public void beginCollision(GameObject collidingObject, Contact contact, Vector2f contactNormal) {
+        if (Math.abs(contactNormal.x) > 0.8f) {
+            this.goingRight = contactNormal.x < 0;
+        }
+    }
+
+    @Override
     public void preSolve(GameObject collidingObject, Contact contact, Vector2f contactNormal) {
         if (collidingObject.getComponent(PlayerController.class) != null || collidingObject.getComponent(Fireball.class) != null) {
             contact.setEnabled(false);
         }
+    }
+
+    public void kill() {
+        fireballCount--;
+        this.gameObject.destroy();
     }
 }

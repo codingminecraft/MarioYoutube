@@ -279,6 +279,43 @@ public class Prefabs {
         return goomba;
     }
 
+    public static GameObject generateTurtle() {
+        Spritesheet turtleSprites = AssetPool.getSpritesheet("assets/images/turtle.png");
+        GameObject turtle = generateSpriteObject(turtleSprites.getSprite(0), 0.25f, 0.35f);
+
+        AnimationState walk = new AnimationState();
+        walk.title = "Walk";
+        float defaultFrameTime = 0.23f;
+        walk.addFrame(turtleSprites.getSprite(0), defaultFrameTime);
+        walk.addFrame(turtleSprites.getSprite(1), defaultFrameTime);
+        walk.setLoop(true);
+
+        AnimationState turtleShell = new AnimationState();
+        turtleShell.title = "TurtleShellSpin";
+        turtleShell.addFrame(turtleSprites.getSprite(2), 0.1f);
+        turtleShell.setLoop(false);
+
+        StateMachine stateMachine = new StateMachine();
+        stateMachine.addState(walk);
+        stateMachine.addState(turtleShell);
+        stateMachine.setDefaultState(walk.title);
+        stateMachine.addState(walk.title, turtleShell.title, "squashMe");
+        turtle.addComponent(stateMachine);
+        turtle.addComponent(new TurtleAI());
+
+        Rigidbody2D rb = new Rigidbody2D();
+        rb.setBodyType(BodyType.Dynamic);
+        rb.setMass(0.1f);
+        rb.setFixedRotation(true);
+        turtle.addComponent(rb);
+        CircleCollider b2d = new CircleCollider();
+        b2d.setRadius(0.13f);
+        b2d.setOffset(new Vector2f(0, -0.05f));
+        turtle.addComponent(b2d);
+
+        return turtle;
+    }
+
     public static GameObject generateBlockCoin() {
         Spritesheet items = AssetPool.getSpritesheet("assets/images/items.png");
         GameObject coinObject = generateSpriteObject(items.getSprite(7), 0.25f, 0.25f);
