@@ -49,6 +49,12 @@ public class Rigidbody2D extends Component {
         rawBody.applyLinearImpulse(new Vec2(impulse.x, impulse.y), rawBody.getWorldCenter());
     }
 
+    public void setPosition(Vector2f newPos) {
+        if (rawBody != null) {
+            rawBody.setTransform(new Vec2(newPos.x, newPos.y), 0.0f);
+        }
+    }
+
     public Vector2f getVelocity() {
         return velocity;
     }

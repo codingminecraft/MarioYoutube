@@ -9,6 +9,7 @@ import observers.EventSystem;
 import observers.events.Event;
 import observers.events.EventType;
 import org.joml.Vector2f;
+import scenes.LevelSceneInitializer;
 
 public class GameViewWindow {
 
@@ -20,6 +21,7 @@ public class GameViewWindow {
                         | ImGuiWindowFlags.MenuBar);
 
         ImGui.beginMenuBar();
+        isPlaying = Window.getScene().isPlaying();
         if (ImGui.menuItem("Play", "", isPlaying, !isPlaying)) {
             isPlaying = true;
             EventSystem.notify(null, new Event(EventType.GameEngineStartPlay));

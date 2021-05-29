@@ -4,6 +4,9 @@ import jade.GameObject;
 import jade.KeyListener;
 import jade.Prefabs;
 import jade.Window;
+import observers.EventSystem;
+import observers.events.Event;
+import observers.events.EventType;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -14,6 +17,7 @@ import physics2d.components.PillboxCollider;
 import physics2d.components.Rigidbody2D;
 import physics2d.enums.BodyType;
 import renderer.DebugDraw;
+import scenes.LevelEditorSceneInitializer;
 import scenes.LevelSceneInitializer;
 import util.AssetPool;
 
@@ -55,6 +59,11 @@ public class PlayerController extends Component {
     private transient float blinkTime = 0.0f;
     private transient SpriteRenderer spr;
 
+    private transient boolean playWinAnimation = false;
+    private transient float timeToCastle = 4.5f;
+    private transient float walkTime = 2.2f;
+    private transient boolean sentEvent = false;
+
     @Override
     public void start() {
         this.rb = gameObject.getComponent(Rigidbody2D.class);
@@ -65,6 +74,36 @@ public class PlayerController extends Component {
 
     @Override
     public void update(float dt) {
+        if (playWinAnimation) {
+            checkOnGround();
+            if (!onGround) {
+                this.gameObject.transform.scale.x = -0.25f;
+                this.gameObject.transform.position.y -= dt * 0.9f;
+                this.stateMachine.trigger("stopRunning");
+                this.stateMachine.trigger("stopJumping");
+                timeToCastle = 4.5f;
+                walkTime = 2.2f;
+            } else {
+                if (this.walkTime > 0) {
+                    this.gameObject.transform.scale.x = 0.25f;
+                    this.gameObject.transform.position.x += dt * 1.0f;
+                    this.stateMachine.trigger("startRunning");
+                }
+                if (!AssetPool.getSound("assets/sounds/stage_clear.ogg").isPlaying()) {
+                    AssetPool.getSound("assets/sounds/stage_clear.ogg").play();
+                }
+                timeToCastle -= dt;
+                walkTime -= dt;
+
+                if (timeToCastle <= 0) {
+                    if (!sentEvent) {
+                        EventSystem.notify(null, new Event(EventType.GameEngineStopPlay));
+                    }
+                }
+            }
+            return;
+        }
+
         if (isDead) {
             if (this.gameObject.transform.position.y < deadMaxHeight && deadGoingUp) {
                 this.gameObject.transform.position.y += dt * walkSpeed / 2.0f;
@@ -319,5 +358,27 @@ public class PlayerController extends Component {
 
     public boolean isHurtInvincible() {
         return this.hurtInvincibilityTimeLeft > 0;
+    }
+
+    public void setPosition(Vector2f newPos) {
+        this.gameObject.transform.position.set(newPos);
+        this.rb.setPosition(newPos);
+    }
+
+    public void playWinAnimation(GameObject flagpole) {
+        if (!playWinAnimation) {
+            this.playWinAnimation = true;
+            this.velocity.set(0, 0);
+            this.acceleration.set(0, 0);
+            this.rb.setVelocity(new Vector2f());
+            this.rb.setIsSensor();
+            this.rb.setBodyType(BodyType.Static);
+            this.gameObject.transform.position.x = flagpole.transform.position.x;
+            AssetPool.getSound("assets/sounds/flagpole.ogg").play();
+        }
+    }
+
+    public boolean hasWon() {
+        return this.playWinAnimation;
     }
 }

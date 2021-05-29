@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import components.Component;
 import components.ComponentDeserializer;
+import components.GameCamera;
 import imgui.ImGui;
 import jade.Camera;
 import jade.GameObject;
@@ -91,6 +92,13 @@ public class Scene {
     public GameObject getGameObject(int gameObjectId) {
         Optional<GameObject> result = this.gameObjects.stream()
                 .filter(gameObject -> gameObject.getUid() == gameObjectId)
+                .findFirst();
+        return result.orElse(null);
+    }
+
+    public GameObject getGameObject(String gameObjectName) {
+        Optional<GameObject> result = this.gameObjects.stream()
+                .filter(gameObject -> gameObject.name.equals(gameObjectName))
                 .findFirst();
         return result.orElse(null);
     }
@@ -192,6 +200,10 @@ public class Scene {
         }
     }
 
+    public boolean isPlaying() {
+        return this.sceneInitializer instanceof LevelSceneInitializer;
+    }
+
     public void load() {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -212,7 +224,11 @@ public class Scene {
             int maxCompId = -1;
             GameObject[] objs = gson.fromJson(inFile, GameObject[].class);
             for (int i=0; i < objs.length; i++) {
-                addGameObjectToScene(objs[i]);
+                if (objs[i].getComponent(GameCamera.class) == null) {
+                    addGameObjectToScene(objs[i]);
+                } else {
+                    continue;
+                }
 
                 for (Component c : objs[i].getAllComponents()) {
                     if (c.getUid() > maxCompId) {

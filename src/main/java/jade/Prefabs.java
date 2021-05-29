@@ -392,4 +392,68 @@ public class Prefabs {
 
         return fireball;
     }
+
+    public static GameObject generateFlagtop() {
+        Spritesheet items = AssetPool.getSpritesheet("assets/images/items.png");
+        GameObject flagtop = generateSpriteObject(items.getSprite(6), 0.25f, 0.25f);
+
+        Rigidbody2D rb = new Rigidbody2D();
+        rb.setBodyType(BodyType.Static);
+        rb.setFixedRotation(true);
+        rb.setContinuousCollision(false);
+        rb.setIsSensor();
+        flagtop.addComponent(rb);
+
+        Box2DCollider b2d = new Box2DCollider();
+        b2d.setHalfSize(new Vector2f(0.1f, 0.25f));
+        b2d.setOffset(new Vector2f(-0.075f, 0.0f));
+        flagtop.addComponent(b2d);
+        flagtop.addComponent(new Flagpole(true));
+
+        return flagtop;
+    }
+
+    public static GameObject generateFlagPole() {
+        Spritesheet items = AssetPool.getSpritesheet("assets/images/items.png");
+        GameObject flagPole = generateSpriteObject(items.getSprite(33), 0.25f, 0.25f);
+
+        Rigidbody2D rb = new Rigidbody2D();
+        rb.setBodyType(BodyType.Static);
+        rb.setFixedRotation(true);
+        rb.setContinuousCollision(false);
+        rb.setIsSensor();
+        flagPole.addComponent(rb);
+
+        Box2DCollider b2d = new Box2DCollider();
+        b2d.setHalfSize(new Vector2f(0.1f, 0.25f));
+        b2d.setOffset(new Vector2f(-0.075f, 0.0f));
+        flagPole.addComponent(b2d);
+        flagPole.addComponent(new Flagpole(false));
+
+        return flagPole;
+    }
+
+    public static GameObject generatePipe(Direction direction) {
+        Spritesheet blocks = AssetPool.getSpritesheet("assets/images/pipes.png");
+        int index = direction == Direction.Down ? 0 :
+                    direction == Direction.Up ? 1 :
+                    direction == Direction.Right ? 2 :
+                    direction == Direction.Left ? 3 : -1;
+        assert index != -1 : "Invalid pipe direction.";
+        GameObject pipe = generateSpriteObject(blocks.getSprite(index), 0.5f, 0.5f);
+
+        Rigidbody2D rb = new Rigidbody2D();
+        rb.setBodyType(BodyType.Static);
+        rb.setFixedRotation(true);
+        rb.setContinuousCollision(false);
+        pipe.addComponent(rb);
+
+        Box2DCollider b2d = new Box2DCollider();
+        b2d.setHalfSize(new Vector2f(0.5f, 0.5f));
+        pipe.addComponent(b2d);
+        pipe.addComponent(new Pipe(direction));
+        pipe.addComponent(new Ground());
+
+        return pipe;
+    }
 }

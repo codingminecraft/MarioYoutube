@@ -215,6 +215,7 @@ public class Window implements Observer {
             this.framebuffer.unbind();
 
             this.imguiLayer.update(dt, currentScene);
+            EventSystem.notifyQueuedEvents();
             glfwSwapBuffers(glfwWindow);
 
             MouseListener.endFrame();
