@@ -135,7 +135,7 @@ public class LevelEditorSceneInitializer extends SceneInitializer {
                         object.addComponent(b2d);
                         object.addComponent(new Ground());
                         if (i == 12) {
-                            //object.addComponent(new BreakableBrick());
+                            object.addComponent(new BreakableBrick());
                         }
                         levelEditorStuff.getComponent(MouseControls.class).pickupObject(object);
                     }
