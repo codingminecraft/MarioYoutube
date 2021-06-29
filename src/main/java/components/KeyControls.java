@@ -24,6 +24,9 @@ public class KeyControls extends Component {
             Window.getScene().addGameObjectToScene(newObj);
             newObj.transform.position.add(Settings.GRID_WIDTH, 0.0f);
             propertiesWindow.setActiveGameObject(newObj);
+            if (newObj.getComponent(StateMachine.class) != null) {
+                newObj.getComponent(StateMachine.class).refreshTextures();
+            }
         } else if (KeyListener.isKeyPressed(GLFW_KEY_LEFT_CONTROL) &&
                 KeyListener.keyBeginPress(GLFW_KEY_D) && activeGameObjects.size() > 1) {
             List<GameObject> gameObjects = new ArrayList<>(activeGameObjects);
@@ -32,6 +35,9 @@ public class KeyControls extends Component {
                 GameObject copy = go.copy();
                 Window.getScene().addGameObjectToScene(copy);
                 propertiesWindow.addActiveGameObject(copy);
+                if (copy.getComponent(StateMachine.class) != null) {
+                    copy.getComponent(StateMachine.class).refreshTextures();
+                }
             }
         } else if (KeyListener.keyBeginPress(GLFW_KEY_DELETE)) {
             for (GameObject go : activeGameObjects) {

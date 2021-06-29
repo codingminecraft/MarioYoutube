@@ -7,6 +7,7 @@ import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import physics2d.RaycastInfo;
+import physics2d.components.PillboxCollider;
 import physics2d.components.Rigidbody2D;
 import renderer.DebugDraw;
 import util.AssetPool;
@@ -141,6 +142,25 @@ public class PlayerController extends Component {
 
         //DebugDraw.addLine2D(raycastBegin, raycastEnd, new Vector3f(1, 0, 0));
         //DebugDraw.addLine2D(raycast2Begin, raycast2End, new Vector3f(1, 0, 0));
+    }
+
+    public void powerup() {
+        if (playerState == PlayerState.Small) {
+            playerState = PlayerState.Big;
+            AssetPool.getSound("assets/sounds/powerup.ogg").play();
+            gameObject.transform.scale.y = 0.42f;
+            PillboxCollider pb = gameObject.getComponent(PillboxCollider.class);
+            if (pb != null) {
+                jumpBoost *= bigJumpBoostFactor;
+                walkSpeed *= bigJumpBoostFactor;
+                pb.setHeight(0.63f);
+            }
+        } else if (playerState == PlayerState.Big) {
+            playerState = PlayerState.Fire;
+            AssetPool.getSound("assets/sounds/powerup.ogg").play();
+        }
+
+        stateMachine.trigger("powerup");
     }
 
     @Override
