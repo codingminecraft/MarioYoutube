@@ -237,9 +237,6 @@ public class Physics2D {
         Vector2f raycast2End = new Vector2f(raycastEnd).add(innerPlayerWidth, 0.0f);
         RaycastInfo info2 = Window.getPhysics().raycast(gameObject, raycast2Begin, raycast2End);
 
-        DebugDraw.addLine2D(raycastBegin, raycastEnd, new Vector3f(1, 0, 0));
-        DebugDraw.addLine2D(raycast2Begin, raycast2End, new Vector3f(1, 0, 0));
-
         return (info.hit && info.hitObject != null && info.hitObject.getComponent(Ground.class) != null) ||
                 (info2.hit && info2.hitObject != null && info2.hitObject.getComponent(Ground.class) != null);
     }

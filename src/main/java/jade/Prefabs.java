@@ -302,6 +302,44 @@ public class Prefabs {
         return goomba;
     }
 
+    public static GameObject generateTurtle() {
+        Spritesheet turtleSprites = AssetPool.getSpritesheet("assets/images/turtle.png");
+        GameObject turtle = generateSpriteObject(turtleSprites.getSprite(0), 0.25f, 0.35f);
+
+        AnimationState walk = new AnimationState();
+        walk.title = "Walk";
+        float defaultFrameTime = 0.23f;
+        walk.addFrame(turtleSprites.getSprite(0), defaultFrameTime);
+        walk.addFrame(turtleSprites.getSprite(1), defaultFrameTime);
+        walk.setLoop(true);
+
+        AnimationState squashed = new AnimationState();
+        squashed.title = "TurtleShellSpin";
+        squashed.addFrame(turtleSprites.getSprite(2), 0.1f);
+        squashed.setLoop(false);
+
+        StateMachine stateMachine = new StateMachine();
+        stateMachine.addState(walk);
+        stateMachine.addState(squashed);
+        stateMachine.setDefaultState(walk.title);
+        stateMachine.addState(walk.title, squashed.title, "squashMe");
+        turtle.addComponent(stateMachine);
+
+        Rigidbody2D rb = new Rigidbody2D();
+        rb.setBodyType(BodyType.Dynamic);
+        rb.setMass(0.1f);
+        rb.setFixedRotation(true);
+        turtle.addComponent(rb);
+        CircleCollider circle = new CircleCollider();
+        circle.setRadius(0.13f);
+        circle.setOffset(new Vector2f(0, -0.05f));
+        turtle.addComponent(circle);
+
+        turtle.addComponent(new TurtleAI());
+
+        return turtle;
+    }
+
     public static GameObject generateMushroom() {
         Spritesheet items = AssetPool.getSpritesheet("assets/images/items.png");
         GameObject mushroom = generateSpriteObject(items.getSprite(10), 0.25f, 0.25f);
