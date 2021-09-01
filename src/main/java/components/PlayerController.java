@@ -20,6 +20,7 @@ import util.AssetPool;
 import static org.lwjgl.glfw.GLFW.*;
 
 public class PlayerController extends Component {
+
     private enum PlayerState {
         Small,
         Big,
@@ -55,6 +56,10 @@ public class PlayerController extends Component {
     private transient float blinkTime = 0.0f;
     private transient SpriteRenderer spr;
 
+    private transient boolean playWinAnimation = false;
+    private transient float timeToCastle = 4.5f;
+    private transient float walkTime = 2.2f;
+
     @Override
     public void start() {
         this.spr = gameObject.getComponent(SpriteRenderer.class);
@@ -65,6 +70,33 @@ public class PlayerController extends Component {
 
     @Override
     public void update(float dt) {
+        if (playWinAnimation) {
+            checkOnGround();
+            if (!onGround) {
+                gameObject.transform.scale.x = -0.25f;
+                gameObject.transform.position.y -= dt;
+                stateMachine.trigger("stopRunning");
+                stateMachine.trigger("stopJumping");
+            } else {
+                if (this.walkTime > 0) {
+                    gameObject.transform.scale.x = 0.25f;
+                    gameObject.transform.position.x += dt;
+                    stateMachine.trigger("startRunning");
+                }
+                if (!AssetPool.getSound("assets/sounds/stage_clear.ogg").isPlaying()) {
+                    AssetPool.getSound("assets/sounds/stage_clear.ogg").play();
+                }
+                timeToCastle -= dt;
+                walkTime -= dt;
+
+                if (timeToCastle <= 0) {
+                    Window.changeScene(new LevelEditorSceneInitializer());
+                }
+            }
+
+            return;
+        }
+
         if (isDead) {
             if (this.gameObject.transform.position.y < deadMaxHeight && deadGoingUp) {
                 this.gameObject.transform.position.y += dt * walkSpeed / 2.0f;
@@ -207,6 +239,19 @@ public class PlayerController extends Component {
         stateMachine.trigger("powerup");
     }
 
+    public void playWinAnimation(GameObject flagpole) {
+        if (!playWinAnimation) {
+            playWinAnimation = true;
+            velocity.set(0.0f, 0.0f);
+            acceleration.set(0.0f, 0.0f);
+            rb.setVelocity(velocity);
+            rb.setIsSensor();
+            rb.setBodyType(BodyType.Static);
+            gameObject.transform.position.x = flagpole.transform.position.x;
+            AssetPool.getSound("assets/sounds/flagpole.ogg").play();
+        }
+    }
+
     @Override
     public void beginCollision(GameObject collidingObject, Contact contact, Vector2f contactNormal) {
         if (isDead) return;
@@ -231,11 +276,12 @@ public class PlayerController extends Component {
     }
 
     public boolean isHurtInvincible() {
-        return this.hurtInvincibilityTimeLeft > 0;
+        return this.hurtInvincibilityTimeLeft > 0 || playWinAnimation;
     }
 
     public boolean isInvincible() {
-        return this.playerState == PlayerState.Invincible || this.hurtInvincibilityTimeLeft > 0;
+        return this.playerState == PlayerState.Invincible ||
+                this.hurtInvincibilityTimeLeft > 0 || playWinAnimation;
     }
 
     public void die() {
