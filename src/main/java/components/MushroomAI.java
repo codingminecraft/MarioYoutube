@@ -38,6 +38,9 @@ public class MushroomAI extends Component {
                 this.gameObject.destroy();
                 hitPlayer = true;
             }
+        } else if (obj.getComponent(Ground.class) == null) {
+            contact.setEnabled(false);
+            return;
         }
 
         if (Math.abs(contactNormal.y) < 0.1f) {
