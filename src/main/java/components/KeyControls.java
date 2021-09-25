@@ -1,6 +1,5 @@
 package components;
 
-import com.sun.corba.se.spi.ior.IdentifiableBase;
 import editor.PropertiesWindow;
 import jade.GameObject;
 import jade.KeyListener;
