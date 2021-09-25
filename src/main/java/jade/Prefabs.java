@@ -267,6 +267,34 @@ public class Prefabs {
         return coin;
     }
 
+    public static GameObject generateCoin() {
+        Spritesheet items = AssetPool.getSpritesheet("assets/images/items.png");
+        GameObject coin = generateSpriteObject(items.getSprite(7), 0.25f, 0.25f);
+
+        AnimationState coinFlip = new AnimationState();
+        coinFlip.title = "CoinFlip";
+        float defaultFrameTime = 0.23f;
+        coinFlip.addFrame(items.getSprite(7), 0.57f);
+        coinFlip.addFrame(items.getSprite(8), defaultFrameTime);
+        coinFlip.addFrame(items.getSprite(9), defaultFrameTime);
+        coinFlip.setLoop(true);
+
+        StateMachine stateMachine = new StateMachine();
+        stateMachine.addState(coinFlip);
+        stateMachine.setDefaultState(coinFlip.title);
+        coin.addComponent(stateMachine);
+        coin.addComponent(new Coin());
+
+        CircleCollider circleCollider = new CircleCollider();
+        circleCollider.setRadius(0.12f);
+        coin.addComponent(circleCollider);
+        Rigidbody2D rb = new Rigidbody2D();
+        rb.setBodyType(BodyType.Static);
+        coin.addComponent(rb);
+
+        return coin;
+    }
+
     public static GameObject generateGoomba() {
         Spritesheet sprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
         GameObject goomba = generateSpriteObject(sprites.getSprite(14), 0.25f, 0.25f);
