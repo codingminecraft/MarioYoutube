@@ -42,9 +42,11 @@ public class TurtleAI extends Component {
             if (goingRight) {
                 gameObject.transform.scale.x = -0.25f;
                 velocity.x = walkSpeed;
+                acceleration.x = 0;
             } else {
                 gameObject.transform.scale.x = 0.25f;
                 velocity.x = -walkSpeed;
+                acceleration.x = 0;
             }
         } else {
             velocity.x = 0;
@@ -130,8 +132,15 @@ public class TurtleAI extends Component {
         }
 
         if (obj.getComponent(Fireball.class) != null) {
-            stomp();
+            if (!isDead) {
+                walkSpeed *= 3.0f;
+                stomp();
+            } else {
+                isMoving = !isMoving;
+                goingRight = contactNormal.x < 0;
+            }
             obj.getComponent(Fireball.class).disappear();
+            contact.setEnabled(false);
         }
     }
 }
