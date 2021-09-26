@@ -124,7 +124,7 @@ public class TurtleAI extends Component {
             } else if (!playerController.isDead() && playerController.isHurtInvincible()) {
                 contact.setEnabled(false);
             }
-        } else if (Math.abs(contactNormal.y) < 0.1f && !obj.isDead()) {
+        } else if (Math.abs(contactNormal.y) < 0.1f && !obj.isDead() && obj.getComponent(MushroomAI.class) == null) {
             goingRight = contactNormal.x < 0;
             if (isMoving && isDead) {
                 AssetPool.getSound("assets/sounds/bump.ogg").play();
