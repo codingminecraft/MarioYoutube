@@ -261,6 +261,7 @@ public class PlayerController extends Component {
             rb.setIsSensor();
             rb.setBodyType(BodyType.Static);
             gameObject.transform.position.x = flagpole.transform.position.x;
+            AssetPool.getSound("assets/sounds/main-theme-overworld.ogg").stop();
             AssetPool.getSound("assets/sounds/flagpole.ogg").play();
         }
     }
@@ -305,6 +306,7 @@ public class PlayerController extends Component {
             this.rb.setVelocity(new Vector2f());
             this.isDead = true;
             this.rb.setIsSensor();
+            AssetPool.getSound("assets/sounds/main-theme-overworld.ogg").stop();
             AssetPool.getSound("assets/sounds/mario_die.ogg").play();
             deadMaxHeight = this.gameObject.transform.position.y + 0.3f;
             this.rb.setBodyType(BodyType.Static);

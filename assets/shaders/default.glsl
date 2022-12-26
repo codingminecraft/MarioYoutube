@@ -38,7 +38,7 @@ void main()
         // NOTE: If you're on AMD GPUs try commenting this line out and replacing it with
         // the next few lines. The issue here is dynamic indexing is undefined behavior
         // in GLSL, so this is not guaranteed to work on all hardware
-        // 
+        //
         // int id = int(fTexId);
         // color = fColor * texture(uTextures[id], fTexCoords);
 

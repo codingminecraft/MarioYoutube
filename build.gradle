@@ -4,13 +4,10 @@ plugins {
 
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
-
 repositories {
     flatDir {
         dirs 'libs'
     }
-    jcenter()
     mavenCentral()
 }
 
@@ -69,9 +66,20 @@ jar {
     }
 }
 
+task copyAssets(type: Copy) {
+    copy {
+        from "assets"
+        into "${buildDir}/libs/assets"
+    }
+
+    copy {
+        from "level.txt"
+        into "${buildDir}/libs"
+    }
+}
+
 task fatJar(type: Jar) {
   manifest.from jar.manifest
-  classifier = 'all'
   from {
     configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
   } {
@@ -81,6 +89,8 @@ task fatJar(type: Jar) {
   }
   with jar
 }
+
+fatJar.dependsOn(copyAssets)
 
 artifacts {
     archives fatJar
