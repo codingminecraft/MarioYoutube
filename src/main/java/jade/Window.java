@@ -1,10 +1,8 @@
 package jade;
 
-import editor.GameViewWindow;
 import observers.EventSystem;
 import observers.Observer;
 import observers.events.Event;
-import observers.events.EventType;
 import org.joml.Vector4f;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
@@ -25,6 +23,7 @@ import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.openal.ALC10.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL30.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window implements Observer {
@@ -43,6 +42,10 @@ public class Window implements Observer {
 
     private static Scene currentScene;
 
+    // NOTE: Turn this to false if you want to include the editor in the game
+    //       true means it will just ship the game without the editor and ImGui stuff
+    public static final boolean RELEASE_BUILD = true;
+
     private Window() {
         this.width = 1920;
         this.height = 1080;
@@ -55,7 +58,11 @@ public class Window implements Observer {
             currentScene.destroy();
         }
 
-        getImguiLayer().getPropertiesWindow().setActiveGameObject(null);
+        // NOTE: Only enable ImGui for ! release builds
+        if (!RELEASE_BUILD) {
+            getImguiLayer().getPropertiesWindow().setActiveGameObject(null);
+        }
+
         currentScene = new Scene(sceneInitializer);
         currentScene.load();
         currentScene.init();
@@ -162,10 +169,15 @@ public class Window implements Observer {
         this.pickingTexture = new PickingTexture(3840, 2160);
         glViewport(0, 0, 3840, 2160);
 
-        this.imguiLayer = new ImGuiLayer(glfwWindow, pickingTexture);
-        this.imguiLayer.initImGui();
-
-        Window.changeScene(new LevelEditorSceneInitializer());
+        // NOTE: If we're building for release, we want to skip any imgui things
+        if (RELEASE_BUILD) {
+            runtimePlaying = true;
+            Window.changeScene(new LevelSceneInitializer());
+        } else {
+            this.imguiLayer = new ImGuiLayer(glfwWindow, pickingTexture);
+            this.imguiLayer.initImGui();
+            Window.changeScene(new LevelEditorSceneInitializer());
+        }
     }
 
     public void loop() {
@@ -214,7 +226,18 @@ public class Window implements Observer {
             }
             this.framebuffer.unbind();
 
-            this.imguiLayer.update(dt, currentScene);
+            if (RELEASE_BUILD) {
+                // NOTE: This is the most complicated piece for release builds. In release builds
+                //       we want to just blit the framebuffer to the main window so we can see the game
+                //
+                //       In non-release builds, we usually draw the framebuffer to an ImGui component as an image.
+                glBindFramebuffer(GL_READ_FRAMEBUFFER, framebuffer.getFboID());
+                glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+                glBlitFramebuffer(0, 0, framebuffer.width, framebuffer.height, 0, 0, this.width, this.height,
+                        GL_COLOR_BUFFER_BIT, GL_NEAREST);
+            } else {
+                this.imguiLayer.update(dt, currentScene);
+            }
 
             KeyListener.endFrame();
             MouseListener.endFrame();

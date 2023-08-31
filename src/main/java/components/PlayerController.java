@@ -6,14 +6,11 @@ import jade.Prefabs;
 import jade.Window;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
 import org.joml.Vector4f;
 import physics2d.Physics2D;
-import physics2d.RaycastInfo;
 import physics2d.components.PillboxCollider;
 import physics2d.components.Rigidbody2D;
 import physics2d.enums.BodyType;
-import renderer.DebugDraw;
 import scenes.LevelEditorSceneInitializer;
 import scenes.LevelSceneInitializer;
 import util.AssetPool;
@@ -91,7 +88,14 @@ public class PlayerController extends Component {
                 walkTime -= dt;
 
                 if (timeToCastle <= 0) {
-                    Window.changeScene(new LevelEditorSceneInitializer());
+                    if (Window.RELEASE_BUILD) {
+                        // NOTE: Just infinitely loop. If you wanted additional levels
+                        //       you could set up some state to figure out which level
+                        //       is next and then load that in the LevelSceneInitializer
+                        Window.changeScene(new LevelSceneInitializer());
+                    } else {
+                        Window.changeScene(new LevelEditorSceneInitializer());
+                    }
                 }
             }
 

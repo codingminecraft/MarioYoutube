@@ -2,7 +2,6 @@ package jade;
 
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import java.util.Arrays;
@@ -57,9 +56,12 @@ public class MouseListener {
     }
 
     public static void mousePosCallback(long window, double xpos, double ypos) {
-        if (!Window.getImguiLayer().getGameViewWindow().getWantCaptureMouse()) {
-            clear();
+        if (!Window.RELEASE_BUILD) {
+            if (!Window.getImguiLayer().getGameViewWindow().getWantCaptureMouse()) {
+                clear();
+            }
         }
+
         if (get().mouseButtonDown > 0) {
             get().isDragging = true;
         }

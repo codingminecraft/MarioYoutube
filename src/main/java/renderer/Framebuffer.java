@@ -6,7 +6,12 @@ public class Framebuffer {
     private int fboID = 0;
     private Texture texture = null;
 
+    public int width, height;
+
     public Framebuffer(int width, int height) {
+        this.width = width;
+        this.height = height;
+
         // Generate framebuffer
         fboID = glGenFramebuffers();
         glBindFramebuffer(GL_FRAMEBUFFER, fboID);

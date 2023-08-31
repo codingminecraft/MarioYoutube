@@ -2574,7 +2574,7 @@
                   "frameTime": 0.1
                 }
               ],
-              "time": 0.017154552,
+              "time": 1.8344074E-4,
               "doesLoop": false
             },
             {
@@ -8208,7 +8208,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             },
             {
@@ -8475,7 +8475,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             },
             {
@@ -8742,7 +8742,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             },
             {
@@ -9351,7 +9351,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             },
             {
@@ -9840,7 +9840,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -16923,7 +16923,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -21680,7 +21680,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -21902,7 +21902,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -46560,7 +46560,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -46772,7 +46772,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -46984,7 +46984,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -47196,7 +47196,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -47408,7 +47408,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -47620,7 +47620,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -47832,7 +47832,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -48044,7 +48044,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -48256,7 +48256,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -48468,7 +48468,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -48680,7 +48680,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -48892,7 +48892,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -49104,7 +49104,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -49316,7 +49316,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -49528,7 +49528,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -49740,7 +49740,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -50273,7 +50273,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -50485,7 +50485,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -51018,7 +51018,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             }
           ],
@@ -75876,7 +75876,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             },
             {
@@ -77709,7 +77709,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -77931,7 +77931,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -80323,7 +80323,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             },
             {
@@ -88078,7 +88078,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -88300,7 +88300,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -88522,7 +88522,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -88775,7 +88775,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             },
             {
@@ -89042,7 +89042,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             },
             {
@@ -89309,7 +89309,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             },
             {
@@ -89576,7 +89576,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             },
             {
@@ -89813,7 +89813,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -90035,7 +90035,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -96449,7 +96449,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             },
             {
@@ -96716,7 +96716,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             },
             {
@@ -96953,7 +96953,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -97175,7 +97175,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -97397,7 +97397,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -97619,7 +97619,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -113373,7 +113373,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.16392063,
+              "time": 0.1968181,
               "doesLoop": true
             },
             {
@@ -113610,7 +113610,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
@@ -113832,7 +113832,7 @@
                   "frameTime": 0.23
                 }
               ],
-              "time": 0.23,
+              "time": 0.11279462,
               "doesLoop": true
             },
             {
